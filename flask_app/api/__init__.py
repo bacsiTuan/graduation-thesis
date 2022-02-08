@@ -1,0 +1,16 @@
+# coding: utf8
+from flask import Blueprint
+from flask_restplus import Api
+
+from flask_app.api.ping import ns as ping_ns
+from flask_app.api.tasks import ns as task_ns
+from flask_app.api.users import ns as user_ns
+
+bp = Blueprint("api", __name__, url_prefix="/v1")
+
+api = Api()
+api.init_app(bp, version="1.0", title="Flask API", description="Flask API", ui=False, doc=False, add_specs=False)
+
+api.add_namespace(ns=ping_ns)
+api.add_namespace(ns=task_ns)
+api.add_namespace(ns=user_ns)

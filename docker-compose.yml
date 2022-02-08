@@ -1,0 +1,22 @@
+version: "3"
+services:
+  graduation-thesis:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ubuntu:latest
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8000:8000"
+    networks:
+      - app-networks
+    env_file: .env
+    working_dir: /home/urbox
+    volumes:
+      - ~/Documents/python-practice/graduation-thesis/app:/home/urbox/app
+      - ~/Documents/python-practice/graduation-thesis/flask_app:/home/urbox/flask_app
+
+networks:
+    app-networks:
+        driver: bridge

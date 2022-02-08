@@ -1,0 +1,55 @@
+amqp==5.0.6
+aniso8601==9.0.1
+attrs==20.3.0
+billiard==3.6.4.0
+certifi==2020.12.5
+chardet==4.0.0
+click==7.1.2
+click-didyoumean==0.0.3
+click-plugins==1.1.1
+click-repl==0.1.6
+greenlet==1.0.0
+idna==2.10
+itsdangerous==1.1.0
+Jinja2==2.11.3
+MarkupSafe==1.1.1
+prompt-toolkit==3.0.18
+pyrsistent==0.17.3
+redis==3.5.3
+six==1.15.0
+vine==5.0.0
+wcwidth==0.2.5
+
+# flask
+gunicorn==20.0.4
+Flask==1.1.2
+Flask-Celery-Helper==1.1.0
+Flask-Cors==3.0.10
+flask-redis==0.4.0
+Flask-RESTful==0.3.8
+flask-restplus==0.13.0
+Werkzeug==0.16.1
+
+# common
+python-dotenv==0.15.0
+dnspython==2.1.0
+pymysql==1.0.2
+pytz==2021.1
+requests==2.25.1
+loguru ~= 0.5.3
+#git+https://urbox:_z_FD7MVy7HsKxbyXVTd@git.urbox.vn/urbox/pyrequestxid.git@0.0.72
+
+# sql
+sqlalchemy>=1.4.17
+
+# mongodb
+pymongo==3.11.3
+mongoengine == 0.23.1
+
+# security libs
+PyJWT==1.4.2
+bcrypt==3.2.0
+
+# UrBox libs
+
+git+https://github.com/HKer-MuCoi/python_http_lib.git@0.0.1.1
