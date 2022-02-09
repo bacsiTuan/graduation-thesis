@@ -5,7 +5,7 @@ from loguru import logger
 from app.decorators import sqlalchemy_session
 from app import models as m
 from app.repositories.users import user_repo
-from app.helper import LoginHelper
+from app.helper import LoginHelper, JWTHelper
 
 
 class UsersService(object):
@@ -21,4 +21,12 @@ class UsersService(object):
             name=kwargs.get('user_name'),
             pwd=kwargs.get('password')
         )
-        return login
+        if login:
+            token = JWTHelper.gen_auth_token(
+                identity=login.id,
+                email=login.email,
+                role_id=login.role_id,
+            )
+            logger.info(token)
+            return token
+

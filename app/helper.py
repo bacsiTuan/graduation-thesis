@@ -140,11 +140,12 @@ class RSAHelper:
 
 class JWTHelper:
     @staticmethod
-    def gen_auth_token(identity, email) -> str:
+    def gen_auth_token(identity, email, role_id) -> str:
         return JWTHelper.encode_auth_token({
             "id": identity,
             "email": email,
-            "expired": Helper.get_now_unixtimestamp() + 60 * 60  # expire in 1h
+            "expired": Helper.get_now_unixtimestamp() + 60 * 60,  # expire in 1h,
+            "role": role_id
         })
 
     @staticmethod
@@ -216,6 +217,6 @@ class LoginHelper(object):
         passwd = pwd.encode('utf-8')
         hashed = user.password.encode('utf-8')
         if bcrypt.checkpw(passwd, hashed):
-            return True
+            return user
         else:
             raise BadRequest(message="Sai mật khẩu")

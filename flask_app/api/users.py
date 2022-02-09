@@ -35,8 +35,19 @@ class APITasks(frp.Resource):
     )
     def put(self, **kwargs):
         logger.warning(kwargs)
-        user = UsersService.login(**kwargs)
-        return {
-                   "success": True,
-                   "data": user
-               }, 200
+        login = UsersService.login(**kwargs)
+        if login:
+            return {
+                       "success": True,
+                       "data": {
+                           "login": True,
+                           "token": login
+                       }
+                   }, 200
+        else:
+            return {
+                       "success": True,
+                       "data": {
+                           "login": False,
+                       }
+                   }, 200
