@@ -7,6 +7,7 @@ from app.extensions import db
 from app.models.abc import BaseModel, MetaBaseModel
 import datetime
 from sqlalchemy import Column, DateTime
+from app.constants import Status
 
 
 class Users(db.BaseModel, BaseModel, metaclass=MetaBaseModel):
@@ -35,7 +36,7 @@ class Users(db.BaseModel, BaseModel, metaclass=MetaBaseModel):
         self.email = kwargs.get("email") or None
         self.password = kwargs.get("password") or None
         self.role_id = kwargs.get("role_id") or 0
-        self.status = kwargs.get("status") or 2
+        self.status = kwargs.get("status") or Status.ON.value
         self.updated_at = kwargs.get("updated_at") or Helper.get_now_datetime()
         self.updated_by = kwargs.get("updated_by") or None
         self.username = kwargs.get("username") or None

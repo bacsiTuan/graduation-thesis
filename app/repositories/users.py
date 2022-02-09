@@ -2,6 +2,7 @@
 from app import models as m
 from app import helper
 from loguru import logger
+from app.constants import Status
 
 
 class UserRepository(object):
@@ -19,6 +20,13 @@ class UserRepository(object):
     def find_by_user_name(self, user_name):
         user = m.Users.query().filter(
             m.Users.username == user_name,
+        ).first()
+        return user
+
+    def find_active_user(self, id):
+        user = m.Users.query().filter(
+            m.Users.id == id,
+            m.Users.status == Status.ON.value
         ).first()
         return user
 

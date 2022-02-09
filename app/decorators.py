@@ -7,7 +7,7 @@ from jsonschema import FormatChecker, validate
 from jsonschema.exceptions import ValidationError
 from app.extensions import db
 from app.errors.exceptions import BadRequest
-# from app.helper import JWTHelper
+from app.helper import JWTHelper
 from loguru import logger
 
 
