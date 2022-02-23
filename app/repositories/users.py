@@ -7,7 +7,6 @@ from app.constants import Status
 
 class UserRepository(object):
     def create(self, **kwargs):
-        logger.info(1)
         user = m.Users(
             id=kwargs.get('id'),
             email=kwargs.get('email'),
@@ -23,9 +22,9 @@ class UserRepository(object):
         ).first()
         return user
 
-    def find_active_user(self, id):
+    def find_active_user(self, user_id):
         user = m.Users.query().filter(
-            m.Users.id == id,
+            m.Users.id == user_id,
             m.Users.status == Status.ON.value
         ).first()
         return user

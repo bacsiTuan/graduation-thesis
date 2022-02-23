@@ -30,3 +30,8 @@ class UsersService(object):
             logger.info(token)
             return token
 
+    @classmethod
+    def get_by_username(cls, username):
+        user = user_repo.find_by_user_name(username)
+        return user.json
+

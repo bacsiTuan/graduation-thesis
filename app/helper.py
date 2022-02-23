@@ -111,13 +111,12 @@ class JWTHelper:
         expired = data.get("expired") or None
         user_id = data.get("id") or None
 
-
-#         # if expired is None or user_id is None:
-#         #     raise Unauthorized()
-#         # if expired < Helper.get_now_unixtimestamp():
-#         #     raise Unauthorized()
-#         # if users_repo.find_active_user(user_id) is None:
-#         #     raise Unauthorized()
+        if expired is None or user_id is None:
+            raise Unauthorized()
+        if expired < Helper.get_now_unixtimestamp():
+            raise Unauthorized()
+        if user_repo.find_active_user(user_id) is None:
+            raise Unauthorized()
 
 
 class LoginHelper(object):
