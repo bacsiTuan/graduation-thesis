@@ -29,5 +29,13 @@ class UserRepository(object):
         ).first()
         return user
 
+    def find_admin_user(self, user_id):
+        user = m.Users.query().filter(
+            m.Users.id == user_id,
+            m.Users.status == Status.ON.value,
+            m.Users.role_id == 1
+        ).first()
+        return user
+
 
 user_repo = UserRepository()
