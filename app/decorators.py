@@ -135,3 +135,24 @@ def check_token():
         return decorator
 
     return wrapper
+
+
+def check_token_admin():
+    def wrapper(func):
+        @wraps(func)
+        def decorator(*args, **kwargs):
+            logger.info(request.headers)
+            if request.headers.get("Authorization") is None:
+                raise Unauthorized(message="Không có quyền đăng nhập")
+            else:
+                jwt_token = request.headers.get("Authorization")
+                logger.info(jwt_token)
+                auth_token = jwt_token.replace("Bearer ", "")
+                JWTHelper.validate_token_admin(auth_token)
+            result = func(*args, **kwargs)
+
+            return result
+
+        return decorator
+
+    return wrapper

@@ -2,7 +2,7 @@
 from flask_restplus import Namespace
 import flask_restplus as frp
 from loguru import logger
-from app.decorators import parse_params, check_token
+from app.decorators import parse_params, check_token, check_token_admin
 from flask_restful.reqparse import Argument
 from app.api.users import UsersService
 
@@ -54,7 +54,7 @@ class APITasks(frp.Resource):
     @parse_params(
         Argument("user_name", location=['values', 'json'], required=True, help="user name", type=str, default=None),
     )
-    @check_token()
+    @check_token_admin()
     def get(self, **kwargs):
         user = UsersService.get_by_username(kwargs.get('user_name'))
         return {

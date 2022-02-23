@@ -35,3 +35,4 @@ class UsersService(object):
         user = user_repo.find_by_user_name(username)
         return user.json
 
+
