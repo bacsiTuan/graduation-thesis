@@ -2,11 +2,12 @@
 """
 Define the Users Model
 """
-from app.helper import Helper
+from app import helper
 from app.extensions import db
 from app.models.abc import BaseModel, MetaBaseModel
 import datetime
 from sqlalchemy import Column, DateTime
+from app.constants import Status
 
 
 class Users(db.BaseModel, BaseModel, metaclass=MetaBaseModel):
@@ -30,13 +31,13 @@ class Users(db.BaseModel, BaseModel, metaclass=MetaBaseModel):
     def __init__(self, **kwargs):
         """ Create a new user """
         self.id = kwargs.get("id") or None
-        self.created_at = kwargs.get("created_at") or Helper.get_now_datetime()
+        self.created_at = kwargs.get("created_at") or helper.Helper.get_now_datetime()
         self.created_by = kwargs.get("created_by") or None
         self.email = kwargs.get("email") or None
         self.password = kwargs.get("password") or None
         self.role_id = kwargs.get("role_id") or 0
-        self.status = kwargs.get("status") or 2
-        self.updated_at = kwargs.get("updated_at") or Helper.get_now_datetime()
+        self.status = kwargs.get("status") or Status.ON.value
+        self.updated_at = kwargs.get("updated_at") or helper.Helper.get_now_datetime()
         self.updated_by = kwargs.get("updated_by") or None
         self.username = kwargs.get("username") or None
         self.job_seeker_id = kwargs.get("job_seeker_id") or None
