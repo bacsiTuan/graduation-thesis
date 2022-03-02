@@ -23,7 +23,7 @@ def create_app(config_app):
 
 
 def __config_logging(app):
-    logger.info('Start flask...')
+    logger.info('Start flask... 🚀🚀🚀')
 
 
 def __register_blueprint(app):
