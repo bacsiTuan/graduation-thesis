@@ -136,6 +136,14 @@ class JWTHelper:
         if user_repo.find_admin_user(user_id) is None:
             raise Unauthorized(message='Không có quyền truy cập')
 
+    @staticmethod
+    def validate_get_by_id_request(bearer_token) -> str:
+        token = bearer_token.replace("Bearer ", "")
+        data = JWTHelper.decode_auth_token(token)
+        if data is None:
+            raise Unauthorized(message='Sai token')
+        return data.get("id")
+
 
 class LoginHelper(object):
     @staticmethod
