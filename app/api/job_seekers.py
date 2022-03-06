@@ -39,3 +39,11 @@ class JobSeekersService(object):
     @classmethod
     def evaluate_job_seeker(cls, **kwargs):
         pass
+
+    @classmethod
+    def activate_job_seeker(cls, job_seeker_code, confirm_number):
+        pass
+
+    @classmethod
+    def export_excel(cls, **kwargs):
+        pass

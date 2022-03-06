@@ -6,6 +6,7 @@ from flask_app.api.ping import ns as ping_ns
 from flask_app.api.tasks import ns as task_ns
 from flask_app.api.users import ns as user_ns
 from flask_app.api.job_seeker import ns as job_seeker_ns
+from flask_app.api.referrer import ns as referrer_ns
 
 bp = Blueprint("api", __name__, url_prefix="/v1")
 
@@ -16,3 +17,4 @@ api.add_namespace(ns=ping_ns)
 api.add_namespace(ns=task_ns)
 api.add_namespace(ns=user_ns)
 api.add_namespace(ns=job_seeker_ns)
+api.add_namespace(ns=referrer_ns)

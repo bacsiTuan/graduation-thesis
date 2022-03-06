@@ -170,3 +170,35 @@ class APIJobSeekersEvaluate(frp.Resource):
         return {
                    "success": True
                }, 200
+
+
+@ns.route("/<string:job_seeker_code>/activate-job-seeker/<int:confirm_number>")
+class APIActivateJobSeeker(frp.Resource):
+    def get(self, job_seeker_code, confirm_number):
+        logger.info(job_seeker_code)
+        logger.info(confirm_number)
+        resource = JobSeekersService.activate_job_seeker(job_seeker_code, confirm_number)
+        return {
+                   "success": True
+               }, 200
+
+
+@ns.route("/export-excel")
+class APIExportExcel(frp.Resource):
+    @parse_params(
+        Argument("code", location=['values', 'json'], required=False, help="code", type=str, default=None),
+        Argument("name", location=['values', 'json'], required=False, help="name", type=str, default=None),
+        Argument("email", location=['values', 'json'], required=False, help="email", type=str, default=None),
+        Argument("cccd", location=['values', 'json'], required=False, help="cccd", type=str, default=None),
+        Argument("position", location=['values', 'json'], required=False, help="position", type=str, default=None),
+        Argument("skills", location=['values', 'json'], required=False, help="skills", type=str, default=None),
+        Argument("to_created", location=["args"], required=False, help="to_created", type=str, default=None),
+        Argument("from_created", location=["args"], required=False, help="from_created", type=str,
+                 default=None),
+        Argument("sortBy", location=["args"], required=False, help="sortBy", type=str, default="code"),
+    )
+    def post(self, **kwargs):
+        resource = JobSeekersService.export_excel(**kwargs)
+        return {
+                   "success": True
+               }, 200
