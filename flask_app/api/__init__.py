@@ -7,6 +7,7 @@ from flask_app.api.tasks import ns as task_ns
 from flask_app.api.users import ns as user_ns
 from flask_app.api.job_seeker import ns as job_seeker_ns
 from flask_app.api.referrer import ns as referrer_ns
+from flask_app.api.request import ns as request_ns
 
 bp = Blueprint("api", __name__, url_prefix="/v1")
 
@@ -18,3 +19,4 @@ api.add_namespace(ns=task_ns)
 api.add_namespace(ns=user_ns)
 api.add_namespace(ns=job_seeker_ns)
 api.add_namespace(ns=referrer_ns)
+api.add_namespace(ns=request_ns)
