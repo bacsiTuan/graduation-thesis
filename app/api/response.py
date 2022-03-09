@@ -4,11 +4,14 @@ from loguru import logger
 
 
 class ResponseService(object):
-    def get_response_by_request(self, request_id):
+    @classmethod
+    def get_response_by_request(cls, request_id):
         pass
 
-    def delete(self, response_id):
+    @classmethod
+    def delete(cls, response_id):
         pass
 
-    def add_response(self, **kwargs):
+    @classmethod
+    def add_response(cls, **kwargs):
         pass

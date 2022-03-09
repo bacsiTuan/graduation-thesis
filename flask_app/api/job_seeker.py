@@ -143,10 +143,10 @@ class APIJobSeekersFilterTableLess(frp.Resource):
                  default=None),
         Argument("created_by", location=['values', 'json'], required=False, help="created_by", type=str, default=None),
         Argument("cccd", location=['values', 'json'], required=False, help="cccd", type=str, default=None),
-        Argument("pageNumber", location=['values', 'json'], required=False, help="pageNumber", type=int, default=0),
-        Argument("pageSize", location=['values', 'json'], required=False, help="pageSize", type=int, default=20),
-        Argument("sortType", location=['values', 'json'], required=False, help="sortType", type=str, default="ASC"),
-        Argument("sortBy", location=['values', 'json'], required=False, help="sortBy", type=str, default="code"),
+        Argument("pageNumber", location=["args"], required=False, help="pageNumber", type=int, default=0),
+        Argument("pageSize", location=["args"], required=False, help="pageSize", type=int, default=20),
+        Argument("sortType", location=["args"], required=False, help="sortType", type=str, default="ASC"),
+        Argument("sortBy", location=["args"], required=False, help="sortBy", type=str, default="code"),
     )
     def post(self, **kwargs):
         resource = JobSeekersService.filter_table_less(**kwargs)
