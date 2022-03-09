@@ -8,7 +8,7 @@ from app.constants import Status
 class UserRepository(object):
     def create(self, **kwargs):
         user = m.Users(
-            id=kwargs.get('id'),
+            role_id=kwargs.get('roles'),
             email=kwargs.get('email'),
             password=helper.LoginHelper.hash_password(kwargs.get('password')),
             username=kwargs.get('username'),

@@ -30,7 +30,7 @@ class Users(db.BaseModel, BaseModel, metaclass=MetaBaseModel):
 
     def __init__(self, **kwargs):
         """ Create a new user """
-        self.id = kwargs.get("id") or None
+        self.id = kwargs.get("id") or helper.Helper.create_uuid()
         self.created_at = kwargs.get("created_at") or helper.Helper.get_now_datetime()
         self.created_by = kwargs.get("created_by") or None
         self.email = kwargs.get("email") or None

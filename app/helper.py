@@ -4,6 +4,7 @@ import time
 import datetime
 import jwt
 import os
+import uuid
 from base64 import b64encode, b64decode
 
 from sqlalchemy.orm import DeclarativeMeta
@@ -38,6 +39,10 @@ class Helper(object):
         if len(str(timestamp)) > 5:
             return datetime.datetime.utcfromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
         return ""
+
+    @classmethod
+    def create_uuid(cls):
+        return str(uuid.uuid4())
 
 
 class AlchemyEncoder(json.JSONEncoder):

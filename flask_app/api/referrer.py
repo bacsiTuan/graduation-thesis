@@ -103,7 +103,7 @@ class APIReferrerFilterTableLess(frp.Resource):
                }, 200
 
 
-@ns.route("/<string:referrer_code/active-referrer/<string:confirm_number>")
+@ns.route("/<string:referrer_code>/active-referrer/<string:confirm_number>")
 class APIReferrerActivateReferrer(frp.Resource):
     def get(self, referrer_code, confirm_number):
         resource = ReferrerService.activate_referrer(referrer_code, confirm_number)

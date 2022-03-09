@@ -1,6 +1,6 @@
 # Import bcrypt:
 import bcrypt
-
+import uuid
 # password = "boyhandsome"
 # # Encode password into a readable utf-8 byte code:
 # password = password.encode('utf-8')
@@ -20,3 +20,6 @@ import bcrypt
 
 # from app.helper import Helper
 # print(Helper.get_now_datetime())
+
+print(uuid.uuid4())
+
