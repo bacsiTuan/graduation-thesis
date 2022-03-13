@@ -1,64 +1,101 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from loguru import logger
+import requests
+import json
+from app.constants.globals import *
+
+URL = f"{BACKEND_HOST}/request"
 
 
 class RequestService(object):
     @classmethod
     def create(cls, **kwargs):
-        pass
+        url = f"{URL}"
+        response = requests.post(url, json=json.dumps(kwargs))
+        return response
 
     @classmethod
     def update(cls, **kwargs):
-        pass
+        url = f"{URL}"
+        response = requests.put(url, json=json.dumps(kwargs))
+        return response
 
     @classmethod
     def get_by_id(cls, request_id):
-        pass
+        url = f"{URL}/{request_id}"
+        response = requests.get(url)
+        return response
 
     @classmethod
     def delete_by_id(cls, request_id):
-        pass
+        url = f"{URL}/{request_id}"
+        response = requests.delete(url)
+        return response
 
     @classmethod
-    def remove_job_seeker(cls, request_id):
-        pass
+    def remove_job_seeker(cls, **kwargs):
+        request_id = kwargs.get("request_id")
+        url = f"{URL}/{request_id}/unassign"
+        response = requests.put(url, params=json.dumps(kwargs))
+        return response
 
     @classmethod
-    def get_simple_request_response_by_job_seeker_id(cls, job_seeker_id):
-        pass
+    def get_simple_request_response_by_job_seeker_id(cls, **kwargs):
+        job_seeker_id = kwargs.get("job_seeker_id")
+        url = f"{URL}/job-seeker/{job_seeker_id}"
+        response = requests.get(url, params=json.dumps(kwargs))
+        return response
 
     @classmethod
     def find_by_referrer_id(cls, referrer_id):
-        pass
+        url = f"{URL}/referrer/{referrer_id}"
+        response = requests.get(url)
+        return response
 
     @classmethod
     def find_by_type_and_job_seeker_is_null(cls, **kwargs):
-        pass
+        url = f"{URL}/draft"
+        response = requests.get(url, params=json.dumps(kwargs))
+        return response
 
     @classmethod
     def assign_referrer(cls, **kwargs):
-        pass
+        url = f"{URL}/assign-referrer"
+        response = requests.put(url, json=json.dumps(kwargs))
+        return response
 
     @classmethod
     def assign_job_seeker(cls, **kwargs):
-        pass
+        url = f"{URL}/assign-job-seeker"
+        response = requests.put(url, json=json.dumps(kwargs))
+        return response
 
     @classmethod
     def get_data_select(cls, **kwargs):
-        pass
+        url = f"{URL}/data-select"
+        response = requests.get(url, params=json.dumps(kwargs))
+        return response
 
     @classmethod
     def filter_table(cls, **kwargs):
-        pass
+        url = f"{URL}/filter-table"
+        data = json.dumps(kwargs)
+        response = requests.post(url, json=data, params=data)
+        return response
 
     @classmethod
     def filter_details(cls, **kwargs):
-        pass
+        url = f"{URL}/filter-details"
+        data = json.dumps(kwargs)
+        response = requests.post(url, json=data, params=data)
+        return response
 
     @classmethod
     def complete(cls, request_id):
-        pass
+        url = f"{URL}/{request_id}/complete"
+        response = requests.put(url)
+        return response
 
     @classmethod
     def export_excel(cls, **kwargs):

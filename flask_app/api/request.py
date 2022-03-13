@@ -20,9 +20,10 @@ class APIRequest(frp.Resource):
     )
     def post(self, **kwargs):
         resource = RequestService.create(**kwargs)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
     @parse_params(
         Argument("title", location=['values', 'json'], required=False, help="title", type=str, default=None),
@@ -33,24 +34,27 @@ class APIRequest(frp.Resource):
     )
     def put(self, **kwargs):
         resource = RequestService.update(**kwargs)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/<int:request_id>")
 class APIRequestById(frp.Resource):
     def get(self, request_id):
         resource = RequestService.get_by_id(request_id)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
     def delete(self, request_id):
         resource = RequestService.delete_by_id(request_id)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/<int:request_id>/unassign")
@@ -58,11 +62,13 @@ class APIRequestUnassigned(frp.Resource):
     @parse_params(
         Argument("type", location=["args"], required=False, help="type", type=str, default=None),
     )
-    def get(self, request_id):
-        resource = RequestService.remove_job_seeker(request_id)
-        return {
-                   "success": True
-               }, 200
+    def get(self, request_id, **kwargs):
+        kwargs['request_id'] = request_id
+        resource = RequestService.remove_job_seeker(**kwargs)
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/job-seeker/<string:job_seeker_id>")
@@ -70,11 +76,13 @@ class APIRequestByJobSeeker(frp.Resource):
     @parse_params(
         Argument("type", location=["args"], required=False, help="type", type=str, default=None),
     )
-    def get(self, job_seeker_id):
-        resource = RequestService.get_simple_request_response_by_job_seeker_id(job_seeker_id)
-        return {
-                   "success": True
-               }, 200
+    def get(self, job_seeker_id, **kwargs):
+        kwargs['job_seeker_id'] = job_seeker_id
+        resource = RequestService.get_simple_request_response_by_job_seeker_id(**kwargs)
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/referrer/<string:referrer_id>")
@@ -82,9 +90,10 @@ class APIRequestFindByReferrerId(frp.Resource):
     # findByReferrerId
     def get(self, referrer_id):
         resource = RequestService.find_by_referrer_id(referrer_id)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/draft")
@@ -98,9 +107,10 @@ class APIRequestDraft(frp.Resource):
     )
     def get(self, **kwargs):
         resource = RequestService.find_by_type_and_job_seeker_is_null(**kwargs)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/assign-referrer")
@@ -117,9 +127,10 @@ class APIRequestAssignReferrer(frp.Resource):
     )
     def put(self, **kwargs):
         resource = RequestService.assign_referrer(**kwargs)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/assign-job-seeker")
@@ -132,9 +143,10 @@ class APIRequestAssignJobSeeker(frp.Resource):
     )
     def put(self, **kwargs):
         resource = RequestService.assign_job_seeker(**kwargs)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/data-select")
@@ -144,9 +156,10 @@ class APIRequestDataSelect(frp.Resource):
     )
     def get(self, **kwargs):
         resource = RequestService.get_data_select(**kwargs)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/filter-table")
@@ -166,9 +179,10 @@ class APIRequestFilterTable(frp.Resource):
     )
     def post(self, **kwargs):
         resource = RequestService.filter_table(**kwargs)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/filter-details")
@@ -193,18 +207,20 @@ class APIRequestFilterDetails(frp.Resource):
     )
     def post(self, **kwargs):
         resource = RequestService.filter_details(**kwargs)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/<string:request_id>/complete")
 class APIRequestComplete(frp.Resource):
     def put(self, request_id):
         resource = RequestService.complete(request_id)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/export-excel")
@@ -221,6 +237,7 @@ class APIRequestExportExcel(frp.Resource):
     )
     def post(self, **kwargs):
         resource = RequestService.export_excel(**kwargs)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource

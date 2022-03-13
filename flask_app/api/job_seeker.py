@@ -28,9 +28,7 @@ class APIJobSeekers(frp.Resource):
         try:
             logger.info(kwargs)
             resource = JobSeekersService.add_job_seekers(**kwargs)
-            return {
-                       "success": True
-                   }, 200
+            return resource
         except Exception as e:
             logger.error(e)
 
@@ -52,9 +50,10 @@ class APIJobSeekers(frp.Resource):
     def put(self, **kwargs):
         logger.info(kwargs)
         resource = JobSeekersService.update_job_seekers(**kwargs)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/filter-table")
@@ -75,9 +74,10 @@ class APIJobSeekersFilter(frp.Resource):
         try:
             logger.info(kwargs)
             resource = JobSeekersService.filter_table(**kwargs)
-            return {
-                       "success": True
-                   }, 200
+            # return {
+            #            "success": True
+            #        }, 200
+            return resource
         except Exception as e:
             logger.error(e)
 
@@ -92,9 +92,10 @@ class APIJobSeekersByID(frp.Resource):
 
     def get(self, job_seeker_id):
         resource = JobSeekersService.get_by_id(job_seeker_id)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/experiences")
@@ -110,9 +111,10 @@ class APIJobSeekersExperience(frp.Resource):
     def put(self, **kwargs):
         logger.info(kwargs)
         resource = JobSeekersService.update_experiences(**kwargs)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/awards")
@@ -127,9 +129,10 @@ class APIJobSeekersAwards(frp.Resource):
     def put(self, **kwargs):
         logger.info("🚀")
         resource = JobSeekersService.update_awards(**kwargs)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/filter-table-less")
@@ -150,9 +153,10 @@ class APIJobSeekersFilterTableLess(frp.Resource):
     )
     def post(self, **kwargs):
         resource = JobSeekersService.filter_table_less(**kwargs)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/evaluate")
@@ -167,9 +171,10 @@ class APIJobSeekersEvaluate(frp.Resource):
     )
     def post(self, **kwargs):
         resource = JobSeekersService.evaluate_job_seeker(**kwargs)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/<string:job_seeker_code>/activate-job-seeker/<int:confirm_number>")
@@ -178,9 +183,10 @@ class APIActivateJobSeeker(frp.Resource):
         logger.info(job_seeker_code)
         logger.info(confirm_number)
         resource = JobSeekersService.activate_job_seeker(job_seeker_code, confirm_number)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/export-excel")
@@ -199,6 +205,7 @@ class APIExportExcel(frp.Resource):
     )
     def post(self, **kwargs):
         resource = JobSeekersService.export_excel(**kwargs)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource

@@ -20,9 +20,10 @@ class APIReferrer(frp.Resource):
     )
     def post(self, **kwargs):
         resource = ReferrerService.create(**kwargs)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
     # UpdateReferrerDTO
     @parse_params(
@@ -35,24 +36,27 @@ class APIReferrer(frp.Resource):
     )
     def put(self, **kwargs):
         resource = ReferrerService.update(**kwargs)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/<int:referrer_id>")
 class APIReferrerById(frp.Resource):
     def get(self, referrer_id):
         resource = ReferrerService.get_by_id(referrer_id)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
     def delete(self, referrer_id):
         resource = ReferrerService.delete_by_id(referrer_id)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/filter-table")
@@ -74,9 +78,10 @@ class APIReferrerFilterTable(frp.Resource):
     )
     def post(self, **kwargs):
         resource = ReferrerService.filter_table(**kwargs)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/filter-table-less")
@@ -98,18 +103,20 @@ class APIReferrerFilterTableLess(frp.Resource):
     def post(self, **kwargs):
         logger.info(kwargs)
         resource = ReferrerService.filter_table_less(**kwargs)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/<string:referrer_code>/active-referrer/<string:confirm_number>")
 class APIReferrerActivateReferrer(frp.Resource):
     def get(self, referrer_code, confirm_number):
         resource = ReferrerService.activate_referrer(referrer_code, confirm_number)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/export-excel")
@@ -128,6 +135,7 @@ class APIReferrerExportExcel(frp.Resource):
     )
     def post(self, **kwargs):
         resource = ReferrerService.export_excel(**kwargs)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource

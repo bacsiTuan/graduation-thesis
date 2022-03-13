@@ -13,18 +13,20 @@ ns = Namespace(name="response", description="response")
 class APIResponse(frp.Resource):
     def get(self, request_id):
         resource = ResponseService.get_response_by_request(request_id)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/<string:response_id>")
 class APIResponseById(frp.Resource):
     def delete(self, response_id):
         resource = ResponseService.delete(response_id)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
     @parse_params(
         Argument("request_id", location=['values', 'json'], required=False, help="request_id", type=str, default=None),
@@ -32,6 +34,7 @@ class APIResponseById(frp.Resource):
     )
     def put(self, **kwargs):
         resource = ResponseService.add_response(**kwargs)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource

@@ -13,9 +13,10 @@ ns = Namespace(name="survey", description="survey")
 class APISurveyById(frp.Resource):
     def get(self, survey_id):
         resource = SurveyService.get_by_id(survey_id)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/filter-table")
@@ -32,9 +33,10 @@ class APISurveyFilterTable(frp.Resource):
     )
     def post(self, **kwargs):
         resource = SurveyService.filter_table(**kwargs)
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
 
 @ns.route("/options")
@@ -44,7 +46,8 @@ class APISurveyOptions(frp.Resource):
     )
     def get(self, **kwargs):
         resource = SurveyService.get_data_select(kwargs.get("codeOrName"))
-        return {
-                   "success": True
-               }, 200
+        # return {
+        #            "success": True
+        #        }, 200
+        return resource
 
