@@ -13,16 +13,16 @@ class ResponseService(object):
     def get_response_by_request(cls, request_id):
         url = f"{URL}/request/{request_id}"
         response = requests.get(url)
-        return response
+        return response.json()
 
     @classmethod
     def delete(cls, response_id):
         url = f"{URL}/{response_id}"
         response = requests.delete(url)
-        return response
+        return response.json()
 
     @classmethod
     def add_response(cls, **kwargs):
         url = f"{URL}"
         response = requests.put(url, json=json.dumps(kwargs))
-        return response
+        return response.json()

@@ -82,7 +82,7 @@ class APIJobSeekersFilter(frp.Resource):
             logger.error(e)
 
 
-@ns.route("/<int:job_seeker_id>")
+@ns.route("/<string:job_seeker_id>")
 class APIJobSeekersByID(frp.Resource):
     def delete(self, job_seeker_id):
         resource = JobSeekersService.delete(job_seeker_id)
@@ -91,6 +91,7 @@ class APIJobSeekersByID(frp.Resource):
                }, 200
 
     def get(self, job_seeker_id):
+        logger.info(1)
         resource = JobSeekersService.get_by_id(job_seeker_id)
         # return {
         #            "success": True

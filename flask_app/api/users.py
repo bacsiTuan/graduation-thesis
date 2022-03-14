@@ -5,6 +5,7 @@ from loguru import logger
 from app.decorators import parse_params, check_token, check_token_admin
 from flask_restful.reqparse import Argument
 from app.api.users import UsersService
+from flask import request
 
 ns = Namespace(name="users", description="users")
 
@@ -37,6 +38,7 @@ class APITasks(frp.Resource):
     )
     @check_token_admin()
     def get(self, **kwargs):
+        logger.info(request.headers.get("Authorization"))
         user = UsersService.get_by_username(kwargs.get('user_name'))
         return {
                    "success": True,
