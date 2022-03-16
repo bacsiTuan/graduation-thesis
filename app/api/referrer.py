@@ -12,13 +12,13 @@ class ReferrerService(object):
     @classmethod
     def create(cls, **kwargs):
         url = f"{URL}"
-        response = requests.post(url, json=json.dumps(kwargs))
+        response = requests.post(url, json=kwargs)
         return response.json()
 
     @classmethod
     def update(cls, **kwargs):
         url = f"{URL}"
-        response = requests.put(url, json=json.dumps(kwargs))
+        response = requests.put(url, json=kwargs)
         return response.json()
 
     @classmethod

@@ -12,13 +12,13 @@ class RequestService(object):
     @classmethod
     def create(cls, **kwargs):
         url = f"{URL}"
-        response = requests.post(url, json=json.dumps(kwargs))
+        response = requests.post(url, json=kwargs)
         return response.json()
 
     @classmethod
     def update(cls, **kwargs):
         url = f"{URL}"
-        response = requests.put(url, json=json.dumps(kwargs))
+        response = requests.put(url, json=kwargs)
         return response.json()
 
     @classmethod
@@ -62,13 +62,13 @@ class RequestService(object):
     @classmethod
     def assign_referrer(cls, **kwargs):
         url = f"{URL}/assign-referrer"
-        response = requests.put(url, json=json.dumps(kwargs))
+        response = requests.put(url, json=kwargs)
         return response.json()
 
     @classmethod
     def assign_job_seeker(cls, **kwargs):
         url = f"{URL}/assign-job-seeker"
-        response = requests.put(url, json=json.dumps(kwargs))
+        response = requests.put(url, json=kwargs)
         return response.json()
 
     @classmethod

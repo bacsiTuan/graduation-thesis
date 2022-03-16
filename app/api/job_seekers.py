@@ -13,20 +13,19 @@ class JobSeekersService(object):
     @classmethod
     def add_job_seekers(cls, **kwargs):
         url = f"{URL}"
-        response = requests.post(url, json=json.dumps(kwargs))
+        response = requests.post(url, json=kwargs)
         return response.json()
 
     @classmethod
     def update_job_seekers(cls, **kwargs):
         url = f"{URL}"
-        response = requests.put(url, json=json.dumps(kwargs))
+        response = requests.put(url, json=kwargs)
         return response.json()
 
     @classmethod
     def filter_table(cls, **kwargs):
         url = f"{URL}/filter-table"
-        data = json.dumps(kwargs)
-        response = requests.post(url, json=data, params=data)
+        response = requests.post(url, json=kwargs, params=kwargs)
         return response.json()
 
     @classmethod
@@ -44,26 +43,25 @@ class JobSeekersService(object):
     @classmethod
     def update_experiences(cls, **kwargs):
         url = f"{URL}/experiences"
-        response = requests.put(url, json=json.dumps(kwargs))
+        response = requests.put(url, json=kwargs)
         return response.json()
 
     @classmethod
     def update_awards(cls, **kwargs):
         url = f"{URL}/awards"
-        response = requests.put(url, json=json.dumps(kwargs))
+        response = requests.put(url, json=kwargs)
         return response.json()
 
     @classmethod
     def filter_table_less(cls, **kwargs):
         url = f"{URL}/filter-table-less"
-        data = json.dumps(kwargs)
-        response = requests.post(url, json=data, params=data)
+        response = requests.post(url, json=kwargs, params=kwargs)
         return response.json()
 
     @classmethod
     def evaluate_job_seeker(cls, **kwargs):
         url = f"{URL}/evaluate"
-        response = requests.put(url, json=json.dumps(kwargs))
+        response = requests.put(url, json=kwargs)
         return response.json()
 
     @classmethod

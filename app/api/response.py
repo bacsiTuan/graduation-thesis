@@ -24,5 +24,5 @@ class ResponseService(object):
     @classmethod
     def add_response(cls, **kwargs):
         url = f"{URL}"
-        response = requests.put(url, json=json.dumps(kwargs))
+        response = requests.put(url, json=kwargs)
         return response.json()
