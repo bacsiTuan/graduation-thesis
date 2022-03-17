@@ -164,13 +164,13 @@ class APIJobSeekersFilterTableLess(frp.Resource):
 class APIJobSeekersEvaluate(frp.Resource):
     # CreateAwardsForJSDTO
     @parse_params(
-        Argument("id", location=['values', 'json'], required=False, help="id", type=int,
+        Argument("id", location=['values', 'json'], required=False, help="id", type=str,
                  default=None),
         Argument("description", location=['values', 'json'], required=False, help="description", type=str,
                  default=None),
         Argument("status", location=['values', 'json'], required=False, help="status", type=str, default=None),
     )
-    def post(self, **kwargs):
+    def put(self, **kwargs):
         resource = JobSeekersService.evaluate_job_seeker(**kwargs)
         # return {
         #            "success": True
