@@ -18,7 +18,7 @@ class SurveyService(object):
     @classmethod
     def filter_table(cls, **kwargs):
         url = f"{URL}/filter-table"
-        data = json.dumps(kwargs)
+        data = kwargs
         response = requests.post(url, json=data, params=data)
         return response.json()
 

@@ -37,14 +37,14 @@ class RequestService(object):
     def remove_job_seeker(cls, **kwargs):
         request_id = kwargs.get("request_id")
         url = f"{URL}/{request_id}/unassign"
-        response = requests.put(url, params=json.dumps(kwargs))
+        response = requests.put(url, params=kwargs)
         return response.json()
 
     @classmethod
     def get_simple_request_response_by_job_seeker_id(cls, **kwargs):
         job_seeker_id = kwargs.get("job_seeker_id")
         url = f"{URL}/job-seeker/{job_seeker_id}"
-        response = requests.get(url, params=json.dumps(kwargs))
+        response = requests.get(url, params=kwargs)
         return response.json()
 
     @classmethod
@@ -56,7 +56,7 @@ class RequestService(object):
     @classmethod
     def find_by_type_and_job_seeker_is_null(cls, **kwargs):
         url = f"{URL}/draft"
-        response = requests.get(url, params=json.dumps(kwargs))
+        response = requests.get(url, params=kwargs)
         return response.json()
 
     @classmethod
@@ -74,20 +74,20 @@ class RequestService(object):
     @classmethod
     def get_data_select(cls, **kwargs):
         url = f"{URL}/data-select"
-        response = requests.get(url, params=json.dumps(kwargs))
+        response = requests.get(url, params=kwargs)
         return response.json()
 
     @classmethod
     def filter_table(cls, **kwargs):
         url = f"{URL}/filter-table"
-        data = json.dumps(kwargs)
+        data = kwargs
         response = requests.post(url, json=data, params=data)
         return response.json()
 
     @classmethod
     def filter_details(cls, **kwargs):
         url = f"{URL}/filter-details"
-        data = json.dumps(kwargs)
+        data = kwargs
         response = requests.post(url, json=data, params=data)
         return response.json()
 

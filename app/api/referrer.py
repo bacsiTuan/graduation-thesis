@@ -36,15 +36,13 @@ class ReferrerService(object):
     @classmethod
     def filter_table(cls, **kwargs):
         url = f"{URL}/filter-table"
-        data = json.dumps(kwargs)
-        response = requests.post(url, json=data, params=data)
+        response = requests.post(url, json=kwargs, params=kwargs)
         return response.json()
 
     @classmethod
     def filter_table_less(cls, **kwargs):
         url = f"{URL}/filter-table-less"
-        data = json.dumps(kwargs)
-        response = requests.post(url, json=data, params=data)
+        response = requests.post(url, json=kwargs, params=kwargs)
         return response.json()
 
     @classmethod

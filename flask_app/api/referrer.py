@@ -42,7 +42,7 @@ class APIReferrer(frp.Resource):
         return resource
 
 
-@ns.route("/<int:referrer_id>")
+@ns.route("/<string:referrer_id>")
 class APIReferrerById(frp.Resource):
     def get(self, referrer_id):
         resource = ReferrerService.get_by_id(referrer_id)

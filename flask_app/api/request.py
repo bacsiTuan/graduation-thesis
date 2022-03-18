@@ -16,7 +16,6 @@ class APIRequest(frp.Resource):
         Argument("type", location=['values', 'json'], required=False, help="type", type=str, default=None),
         Argument("status", location=['values', 'json'], required=False, help="status", type=int, default=None),
         Argument("due_date", location=['values', 'json'], required=False, help="due_date", type=str, default=None),
-        Argument("title", location=['values', 'json'], required=False, help="title", type=str, default=None),
     )
     def post(self, **kwargs):
         resource = RequestService.create(**kwargs)
@@ -28,7 +27,7 @@ class APIRequest(frp.Resource):
     @parse_params(
         Argument("title", location=['values', 'json'], required=False, help="title", type=str, default=None),
         Argument("type", location=['values', 'json'], required=False, help="type", type=str, default=None),
-        Argument("id", location=['values', 'json'], required=False, help="id", type=int, default=None),
+        Argument("id", location=['values', 'json'], required=False, help="id", type=str, default=None),
         Argument("due_date", location=['values', 'json'], required=False, help="due_date", type=str, default=None),
         Argument("title", location=['values', 'json'], required=False, help="title", type=str, default=None),
     )
@@ -40,7 +39,7 @@ class APIRequest(frp.Resource):
         return resource
 
 
-@ns.route("/<int:request_id>")
+@ns.route("/<string:request_id>")
 class APIRequestById(frp.Resource):
     def get(self, request_id):
         resource = RequestService.get_by_id(request_id)
@@ -57,12 +56,12 @@ class APIRequestById(frp.Resource):
         return resource
 
 
-@ns.route("/<int:request_id>/unassign")
+@ns.route("/<string:request_id>/unassign")
 class APIRequestUnassigned(frp.Resource):
     @parse_params(
         Argument("type", location=["args"], required=False, help="type", type=str, default=None),
     )
-    def get(self, request_id, **kwargs):
+    def put(self, request_id, **kwargs):
         kwargs['request_id'] = request_id
         resource = RequestService.remove_job_seeker(**kwargs)
         # return {
