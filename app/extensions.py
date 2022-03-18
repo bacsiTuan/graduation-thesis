@@ -33,13 +33,13 @@ from tuan_lib.http import FlaskRequestId  # noqa
 #     MONGODB_URL = f'{MONGODB_URL}&replicaSet={MONGODB_REPLICASET}'
 #
 # db_mongo = mongoengine.connect(host=MONGODB_URL)
-DB_TYPE = os.environ.get('DB_MYSQL_TYPE') or 'mysql'
-DB_CONNECTOR = os.environ.get('DB_MYSQL_CONNECTOR') or 'pymysql'
-DB_USERNAME = os.environ.get('DB_MYSQL_USER')
-DB_PASSWORD = os.environ.get('DB_MYSQL_PASS')
-DB_HOST = os.environ.get('DB_MYSQL_HOST')
-DB_PORT = os.environ.get('DB_MYSQL_PORT')
-DB_NAME = os.environ.get('DB_MYSQL_DBNAME')
+DB_TYPE = os.environ['DB_MYSQL_TYPE'] or 'mysql'
+DB_CONNECTOR = os.environ['DB_MYSQL_CONNECTOR'] or 'pymysql'
+DB_USERNAME = os.environ['DB_MYSQL_USER']
+DB_PASSWORD = os.environ['DB_MYSQL_PASS']
+DB_HOST = os.environ['DB_MYSQL_HOST']
+DB_PORT = os.environ['DB_MYSQL_PORT']
+DB_NAME = os.environ['DB_MYSQL_DBNAME']
 DATABASE_URL = f'{DB_TYPE}+{DB_CONNECTOR}://{urllib.parse.quote(DB_USERNAME)}:{urllib.parse.quote(DB_PASSWORD)}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 
 db = ActiveAlchemy(DATABASE_URL)

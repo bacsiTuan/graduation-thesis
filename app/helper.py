@@ -76,7 +76,7 @@ class JWTHelper:
 
     @staticmethod
     def encode_auth_token(payload) -> str:
-        secret_key = os.environ.get("JWT_SECRET")
+        secret_key = os.environ["JWT_SECRET"]
         logger.info(secret_key)
         """
         Generates the Auth Token
@@ -93,7 +93,7 @@ class JWTHelper:
 
     @staticmethod
     def decode_auth_token(token):
-        secret_key = os.environ.get("JWT_SECRET")
+        secret_key = os.environ["JWT_SECRET"]
         """
         Decode the auth token
         """
