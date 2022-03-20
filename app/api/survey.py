@@ -25,3 +25,19 @@ class SurveyService(object):
     @classmethod
     def get_data_select(cls, code_or_name):
         pass
+
+    @classmethod
+    def delete_by_id(cls, survey_id):
+        url = f"{URL}/{survey_id}"
+        response = requests.delete(url)
+        return response.json()
+
+    @classmethod
+    def create(cls, **kwargs):
+        response = requests.post(URL, json=kwargs)
+        return response.json()
+
+    @classmethod
+    def update(cls, **kwargs):
+        response = requests.put(URL, json=kwargs)
+        return response.json()

@@ -5,6 +5,7 @@ from loguru import logger
 from app.decorators import parse_params, check_token
 from flask_restful.reqparse import Argument
 from app.api.job_seekers import JobSeekersService
+from app.constants import Role
 
 ns = Namespace(name="job-seeker", description="job seeker")
 
@@ -24,6 +25,7 @@ class APIJobSeekers(frp.Resource):
         Argument("skills", location=['values', 'json'], required=False, help="skills", type=str, default=None),
         Argument("status", location=['values', 'json'], required=False, help="status", type=str, default=None),
     )
+    @check_token(role=[Role.HR.value])
     def post(self, **kwargs):
         try:
             logger.info(kwargs)
@@ -47,12 +49,10 @@ class APIJobSeekers(frp.Resource):
         Argument("skills", location=['values', 'json'], required=False, help="skills", type=str, default=None),
         Argument("status", location=['values', 'json'], required=False, help="status", type=str, default=None),
     )
+    @check_token(role=[Role.HR.value])
     def put(self, **kwargs):
         logger.info(kwargs)
         resource = JobSeekersService.update_job_seekers(**kwargs)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource
 
 
@@ -70,13 +70,11 @@ class APIJobSeekersFilter(frp.Resource):
         Argument("sortType", location=["args"], required=False, help="sortType", type=str, default="ASC"),
         Argument("sortBy", location=["args"], required=False, help="sortBy", type=str, default="code"),
     )
+    @check_token(role=[Role.HR.value, Role.ADMIN.value])
     def post(self, **kwargs):
         try:
             logger.info(kwargs)
             resource = JobSeekersService.filter_table(**kwargs)
-            # return {
-            #            "success": True
-            #        }, 200
             return resource
         except Exception as e:
             logger.error(e)
@@ -84,18 +82,15 @@ class APIJobSeekersFilter(frp.Resource):
 
 @ns.route("/<string:job_seeker_id>")
 class APIJobSeekersByID(frp.Resource):
+    @check_token(role=[Role.HR.value])
     def delete(self, job_seeker_id):
         resource = JobSeekersService.delete(job_seeker_id)
-        return {
-                   "success": True
-               }, 200
+        return resource
 
+    @check_token(role=[Role.HR.value, Role.ADMIN.value])
     def get(self, job_seeker_id):
         logger.info(1)
         resource = JobSeekersService.get_by_id(job_seeker_id)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource
 
 
@@ -109,12 +104,11 @@ class APIJobSeekersExperience(frp.Resource):
                  default=None, action='append'),
 
     )
+    @check_token(role=[Role.HR.value])
     def put(self, **kwargs):
         logger.info(kwargs)
         resource = JobSeekersService.update_experiences(**kwargs)
-        # return {
-        #            "success": True
-        #        }, 200
+
         return resource
 
 
@@ -127,12 +121,10 @@ class APIJobSeekersAwards(frp.Resource):
         Argument("awards", location=['values', 'json'], required=False, help="awards", type=dict, default=None,
                  action="append"),
     )
+    @check_token(role=[Role.HR.value])
     def put(self, **kwargs):
         logger.info("🚀")
         resource = JobSeekersService.update_awards(**kwargs)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource
 
 
@@ -152,11 +144,23 @@ class APIJobSeekersFilterTableLess(frp.Resource):
         Argument("sortType", location=["args"], required=False, help="sortType", type=str, default="ASC"),
         Argument("sortBy", location=["args"], required=False, help="sortBy", type=str, default="code"),
     )
+    @check_token(role=[Role.HR.value])
     def post(self, **kwargs):
         resource = JobSeekersService.filter_table_less(**kwargs)
-        # return {
-        #            "success": True
-        #        }, 200
+        return resource
+
+
+@ns.route("/referrer-settings")
+class APIJobSeekersReferrerSettings(frp.Resource):
+    @parse_params(
+        Argument("job_seeker_id", location=['values', 'json'], required=False, help="job seeker id", type=str,
+                 default=None),
+        Argument("referrer_settings", location=['values', 'json'], required=False, help="description", type=dict,
+                 default=None, action='append'),
+    )
+    @check_token(role=[Role.HR.value])
+    def put(self, **kwargs):
+        resource = JobSeekersService.update_referrer_settings(**kwargs)
         return resource
 
 
@@ -170,11 +174,9 @@ class APIJobSeekersEvaluate(frp.Resource):
                  default=None),
         Argument("status", location=['values', 'json'], required=False, help="status", type=str, default=None),
     )
+    @check_token(role=[Role.ADMIN.value])
     def put(self, **kwargs):
         resource = JobSeekersService.evaluate_job_seeker(**kwargs)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource
 
 
@@ -204,9 +206,7 @@ class APIExportExcel(frp.Resource):
                  default=None),
         Argument("sortBy", location=["args"], required=False, help="sortBy", type=str, default="code"),
     )
+    @check_token(role=[Role.HR.value, Role.ADMIN.value])
     def post(self, **kwargs):
         resource = JobSeekersService.export_excel(**kwargs)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource

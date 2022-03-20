@@ -10,6 +10,7 @@ from flask_app.api.referrer import ns as referrer_ns
 from flask_app.api.request import ns as request_ns
 from flask_app.api.response import ns as response_ns
 from flask_app.api.survey import ns as survey_ns
+from flask_app.api.position import ns as position_ns
 
 bp = Blueprint("api", __name__, url_prefix="/v1")
 
@@ -24,3 +25,4 @@ api.add_namespace(ns=referrer_ns)
 api.add_namespace(ns=request_ns)
 api.add_namespace(ns=response_ns)
 api.add_namespace(ns=survey_ns)
+api.add_namespace(ns=position_ns)

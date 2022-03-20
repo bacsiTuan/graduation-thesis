@@ -5,6 +5,7 @@ from loguru import logger
 from app.decorators import parse_params, check_token
 from flask_restful.reqparse import Argument
 from app.api.request import RequestService
+from app.constants import Role
 
 ns = Namespace(name="request", description="request")
 
@@ -17,11 +18,9 @@ class APIRequest(frp.Resource):
         Argument("status", location=['values', 'json'], required=False, help="status", type=int, default=None),
         Argument("due_date", location=['values', 'json'], required=False, help="due_date", type=str, default=None),
     )
+    @check_token(role=[Role.HR.value])
     def post(self, **kwargs):
         resource = RequestService.create(**kwargs)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource
 
     @parse_params(
@@ -31,28 +30,22 @@ class APIRequest(frp.Resource):
         Argument("due_date", location=['values', 'json'], required=False, help="due_date", type=str, default=None),
         Argument("title", location=['values', 'json'], required=False, help="title", type=str, default=None),
     )
+    @check_token(role=[Role.HR.value])
     def put(self, **kwargs):
         resource = RequestService.update(**kwargs)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource
 
 
 @ns.route("/<string:request_id>")
 class APIRequestById(frp.Resource):
+    @check_token(role=[Role.HR.value, Role.ADMIN.value])
     def get(self, request_id):
         resource = RequestService.get_by_id(request_id)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource
 
+    @check_token(role=[Role.HR.value])
     def delete(self, request_id):
         resource = RequestService.delete_by_id(request_id)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource
 
 
@@ -61,12 +54,10 @@ class APIRequestUnassigned(frp.Resource):
     @parse_params(
         Argument("type", location=["args"], required=False, help="type", type=str, default=None),
     )
+    @check_token(role=[Role.HR.value])
     def put(self, request_id, **kwargs):
         kwargs['request_id'] = request_id
         resource = RequestService.remove_job_seeker(**kwargs)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource
 
 
@@ -75,23 +66,19 @@ class APIRequestByJobSeeker(frp.Resource):
     @parse_params(
         Argument("type", location=["args"], required=False, help="type", type=str, default=None),
     )
+    @check_token(role=[Role.HR.value, Role.ADMIN.value])
     def get(self, job_seeker_id, **kwargs):
         kwargs['job_seeker_id'] = job_seeker_id
         resource = RequestService.get_simple_request_response_by_job_seeker_id(**kwargs)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource
 
 
 @ns.route("/referrer/<string:referrer_id>")
 class APIRequestFindByReferrerId(frp.Resource):
     # findByReferrerId
+    @check_token(role=[Role.HR.value, Role.ADMIN.value])
     def get(self, referrer_id):
         resource = RequestService.find_by_referrer_id(referrer_id)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource
 
 
@@ -104,11 +91,9 @@ class APIRequestDraft(frp.Resource):
         Argument("sortType", location=["args"], required=False, help="sortType", type=str, default="ASC"),
         Argument("sortBy", location=["args"], required=False, help="sortBy", type=str, default="code"),
     )
+    @check_token(role=[Role.HR.value])
     def get(self, **kwargs):
         resource = RequestService.find_by_type_and_job_seeker_is_null(**kwargs)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource
 
 
@@ -124,11 +109,9 @@ class APIRequestAssignReferrer(frp.Resource):
         Argument("relationship_desc", location=['values', 'json'], required=False, help="relationship_desc", type=str,
                  default=None),
     )
+    @check_token(role=[Role.HR.value])
     def put(self, **kwargs):
         resource = RequestService.assign_referrer(**kwargs)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource
 
 
@@ -140,11 +123,9 @@ class APIRequestAssignJobSeeker(frp.Resource):
         Argument("job_seeker_id", location=['values', 'json'], required=False, help="job_seeker_id", type=str,
                  default=None),
     )
+    @check_token(role=[Role.HR.value])
     def put(self, **kwargs):
         resource = RequestService.assign_job_seeker(**kwargs)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource
 
 
@@ -153,11 +134,9 @@ class APIRequestDataSelect(frp.Resource):
     @parse_params(
         Argument("codeOrName", location=["args"], required=False, help="codeOrName", type=str, default="code"),
     )
+    @check_token(role=[Role.HR.value])
     def get(self, **kwargs):
         resource = RequestService.get_data_select(**kwargs)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource
 
 
@@ -176,11 +155,9 @@ class APIRequestFilterTable(frp.Resource):
         Argument("sortType", location=["args"], required=False, help="sortType", type=str, default="ASC"),
         Argument("sortBy", location=["args"], required=False, help="sortBy", type=str, default="code"),
     )
+    @check_token(role=[Role.HR.value, Role.ADMIN.value])
     def post(self, **kwargs):
         resource = RequestService.filter_table(**kwargs)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource
 
 
@@ -204,21 +181,17 @@ class APIRequestFilterDetails(frp.Resource):
         Argument("sortType", location=["args"], required=False, help="sortType", type=str, default="ASC"),
         Argument("sortBy", location=["args"], required=False, help="sortBy", type=str, default="code"),
     )
+    @check_token(role=[Role.HR.value, Role.ADMIN.value])
     def post(self, **kwargs):
         resource = RequestService.filter_details(**kwargs)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource
 
 
 @ns.route("/<string:request_id>/complete")
 class APIRequestComplete(frp.Resource):
+    @check_token(role=[Role.HR.value, Role.ADMIN.value])
     def put(self, request_id):
         resource = RequestService.complete(request_id)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource
 
 
@@ -234,9 +207,7 @@ class APIRequestExportExcel(frp.Resource):
         Argument("referrer", location=['values', 'json'], required=False, help="referrer", type=str, default=None),
         Argument("sortBy", location=["args"], required=False, help="sortBy", type=str, default="code"),
     )
+    @check_token(role=[Role.HR.value, Role.ADMIN.value])
     def post(self, **kwargs):
         resource = RequestService.export_excel(**kwargs)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource

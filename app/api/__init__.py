@@ -7,3 +7,4 @@ from app.api.referrer import ReferrerService  # noqa
 from app.api.request import RequestService  # noqa
 from app.api.response import ResponseService  # noqa
 from app.api.survey import SurveyService  # noqa
+from app.api.position import PositionService  # noqa

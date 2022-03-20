@@ -5,6 +5,7 @@ from loguru import logger
 from app.decorators import parse_params, check_token
 from flask_restful.reqparse import Argument
 from app.api.referrer import ReferrerService
+from app.constants import Role
 
 ns = Namespace(name="referrer", description="referrer")
 
@@ -18,11 +19,9 @@ class APIReferrer(frp.Resource):
         Argument("phone_number", location=['values', 'json'], required=False, help="phone_number", type=str,
                  default=None),
     )
+    @check_token(role=[Role.HR.value])
     def post(self, **kwargs):
         resource = ReferrerService.create(**kwargs)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource
 
     # UpdateReferrerDTO
@@ -34,23 +33,20 @@ class APIReferrer(frp.Resource):
         Argument("phone_number", location=['values', 'json'], required=False, help="phone_number", type=str,
                  default=None),
     )
+    @check_token(role=[Role.HR.value])
     def put(self, **kwargs):
         resource = ReferrerService.update(**kwargs)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource
 
 
 @ns.route("/<string:referrer_id>")
 class APIReferrerById(frp.Resource):
+    @check_token(role=[Role.HR.value, Role.ADMIN.value])
     def get(self, referrer_id):
         resource = ReferrerService.get_by_id(referrer_id)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource
 
+    @check_token(role=[Role.HR.value])
     def delete(self, referrer_id):
         resource = ReferrerService.delete_by_id(referrer_id)
         # return {
@@ -76,11 +72,9 @@ class APIReferrerFilterTable(frp.Resource):
         Argument("sortType", location=["args"], required=False, help="sortType", type=str, default="ASC"),
         Argument("sortBy", location=["args"], required=False, help="sortBy", type=str, default="code"),
     )
+    @check_token(role=[Role.HR.value, Role.ADMIN.value])
     def post(self, **kwargs):
         resource = ReferrerService.filter_table(**kwargs)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource
 
 
@@ -100,12 +94,10 @@ class APIReferrerFilterTableLess(frp.Resource):
         Argument("sortType", location=["args"], required=False, help="sortType", type=str, default="ASC"),
         Argument("sortBy", location=["args"], required=False, help="sortBy", type=str, default="code"),
     )
+    @check_token(role=[Role.HR.value])
     def post(self, **kwargs):
         logger.info(kwargs)
         resource = ReferrerService.filter_table_less(**kwargs)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource
 
 
@@ -133,9 +125,7 @@ class APIReferrerExportExcel(frp.Resource):
                  default=None),
         Argument("sortBy", location=["args"], required=False, help="sortBy", type=str, default="code"),
     )
+    @check_token(role=[Role.HR.value, Role.ADMIN.value])
     def post(self, **kwargs):
         resource = ReferrerService.export_excel(**kwargs)
-        # return {
-        #            "success": True
-        #        }, 200
         return resource

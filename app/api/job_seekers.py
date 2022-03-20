@@ -73,3 +73,9 @@ class JobSeekersService(object):
     @classmethod
     def export_excel(cls, **kwargs):
         pass
+
+    @classmethod
+    def update_referrer_settings(cls, **kwargs):
+        url = f"{URL}/referrer-settings"
+        response = requests.put(url, json=kwargs)
+        return response.json()
