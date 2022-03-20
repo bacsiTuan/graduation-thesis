@@ -8,3 +8,4 @@ from app.api.request import RequestService  # noqa
 from app.api.response import ResponseService  # noqa
 from app.api.survey import SurveyService  # noqa
 from app.api.position import PositionService  # noqa
+from app.api.skill import SkillService  # noqa
