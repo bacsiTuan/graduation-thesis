@@ -34,6 +34,8 @@ class UsersService(object):
     @classmethod
     def get_by_username(cls, username):
         user = user_repo.find_by_user_name(username)
+        if user is None:
+            raise BadRequest(message="User not found")
         return user.json
 
     @classmethod

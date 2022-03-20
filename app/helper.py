@@ -107,7 +107,7 @@ class JWTHelper:
             # return None
 
     @staticmethod
-    def validate_token(token):
+    def validate_token(token: str, role: list):
         data = JWTHelper.decode_auth_token(token)
         logger.info(data)
         if data is None:
@@ -115,6 +115,7 @@ class JWTHelper:
 
         expired = data.get("expired") or None
         user_id = data.get("id") or None
+        role_id = data.get("role") or None
 
         if expired is None or user_id is None:
             raise Unauthorized(message='token không hợp lệ')
@@ -122,24 +123,26 @@ class JWTHelper:
             raise Unauthorized(message='token hết hạn')
         if user_repo.find_active_user(user_id) is None:
             raise Unauthorized(message='Không tìm thấy người dùng')
+        if role_id not in role:
+            raise Unauthorized(message='Không có quyền truy cập')
 
     # validate cho admin
-    @staticmethod
-    def validate_token_admin(token):
-        data = JWTHelper.decode_auth_token(token)
-        logger.info(data)
-        if data is None:
-            raise Unauthorized(message='Sai token')
-
-        expired = data.get("expired") or None
-        user_id = data.get("id") or None
-
-        if expired is None or user_id is None:
-            raise Unauthorized(message='token không hợp lệ')
-        if expired < Helper.get_now_unixtimestamp():
-            raise Unauthorized(message='token hết hạn')
-        if user_repo.find_admin_user(user_id) is None:
-            raise Unauthorized(message='Không có quyền truy cập')
+    # @staticmethod
+    # def validate_token_admin(token):
+    #     data = JWTHelper.decode_auth_token(token)
+    #     logger.info(data)
+    #     if data is None:
+    #         raise Unauthorized(message='Sai token')
+    #
+    #     expired = data.get("expired") or None
+    #     user_id = data.get("id") or None
+    #
+    #     if expired is None or user_id is None:
+    #         raise Unauthorized(message='token không hợp lệ')
+    #     if expired < Helper.get_now_unixtimestamp():
+    #         raise Unauthorized(message='token hết hạn')
+    #     if user_repo.find_admin_user(user_id) is None:
+    #         raise Unauthorized(message='Không có quyền truy cập')
 
     @staticmethod
     def validate_get_by_id_request(bearer_token) -> str:

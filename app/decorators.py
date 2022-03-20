@@ -116,18 +116,19 @@ def sqlalchemy_session(**schema):
     return decorated
 
 
-def check_token():
+def check_token(role: list):
     def wrapper(func):
         @wraps(func)
         def decorator(*args, **kwargs):
-            logger.info(request.headers)
+            logger.info(role)
+            # logger.info(request.headers)
             if request.headers.get("Authorization") is None:
                 raise Unauthorized(message="Không có quyền đăng nhập")
             else:
                 jwt_token = request.headers.get("Authorization")
                 logger.info(jwt_token)
                 auth_token = jwt_token.replace("Bearer ", "")
-                JWTHelper.validate_token(auth_token)
+                JWTHelper.validate_token(auth_token, role)
             result = func(*args, **kwargs)
 
             return result
@@ -137,22 +138,23 @@ def check_token():
     return wrapper
 
 
-def check_token_admin():
-    def wrapper(func):
-        @wraps(func)
-        def decorator(*args, **kwargs):
-            logger.info(request.headers)
-            if request.headers.get("Authorization") is None:
-                raise Unauthorized(message="Không có quyền đăng nhập")
-            else:
-                jwt_token = request.headers.get("Authorization")
-                logger.info(jwt_token)
-                auth_token = jwt_token.replace("Bearer ", "")
-                JWTHelper.validate_token_admin(auth_token)
-            result = func(*args, **kwargs)
-
-            return result
-
-        return decorator
-
-    return wrapper
+# def check_token_admin(role: list):
+#     def wrapper(func):
+#         @wraps(func)
+#         def decorator(*args, **kwargs):
+#             logger.info(role)
+#             logger.info(request.headers)
+#             if request.headers.get("Authorization") is None:
+#                 raise Unauthorized(message="Không có quyền đăng nhập")
+#             else:
+#                 jwt_token = request.headers.get("Authorization")
+#                 logger.info(jwt_token)
+#                 auth_token = jwt_token.replace("Bearer ", "")
+#                 JWTHelper.validate_token_admin(auth_token)
+#             result = func(*args, **kwargs)
+#
+#             return result
+#
+#         return decorator
+#
+#     return wrapper

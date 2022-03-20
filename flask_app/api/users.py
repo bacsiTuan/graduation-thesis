@@ -2,10 +2,11 @@
 from flask_restplus import Namespace
 import flask_restplus as frp
 from loguru import logger
-from app.decorators import parse_params, check_token, check_token_admin
+from app.decorators import parse_params, check_token
 from flask_restful.reqparse import Argument
 from app.api.users import UsersService
 from flask import request
+from app.constants import Role
 
 ns = Namespace(name="users", description="users")
 
@@ -36,9 +37,9 @@ class APITasks(frp.Resource):
     @parse_params(
         Argument("user_name", location=['values', 'json'], required=True, help="user name", type=str, default=None),
     )
-    @check_token_admin()
+    @check_token(role=[Role.ADMIN.value, Role.HR.value])
     def get(self, **kwargs):
-        logger.info(request.headers.get("Authorization"))
+        # logger.info(request.headers.get("Authorization"))
         user = UsersService.get_by_username(kwargs.get('user_name'))
         return {
                    "success": True,

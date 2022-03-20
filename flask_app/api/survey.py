@@ -2,7 +2,7 @@
 from flask_restplus import Namespace
 import flask_restplus as frp
 from loguru import logger
-from app.decorators import parse_params, check_token, check_token_admin
+from app.decorators import parse_params, check_token
 from flask_restful.reqparse import Argument
 from app.api.survey import SurveyService
 
