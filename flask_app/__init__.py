@@ -33,9 +33,10 @@ def __register_blueprint(app):
 
 def __init_app(app):
     try:
+        pass
         #     # db_mongo.init_app(app)
         #     redis.init_app(app)
-        flask_request_id.init_app(app)
+        # flask_request_id.init_app(app)
     except Exception as e:
         logger.error(e)
 

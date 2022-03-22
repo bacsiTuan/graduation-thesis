@@ -6,6 +6,7 @@ from app.decorators import parse_params, check_token
 from flask_restful.reqparse import Argument
 from app.api.job_seekers import JobSeekersService
 from app.constants import Role
+from flask import request
 
 ns = Namespace(name="job-seeker", description="job seeker")
 
@@ -70,8 +71,9 @@ class APIJobSeekersFilter(frp.Resource):
         Argument("sortType", location=["args"], required=False, help="sortType", type=str, default="ASC"),
         Argument("sortBy", location=["args"], required=False, help="sortBy", type=str, default="code"),
     )
-    @check_token(role=[Role.HR.value, Role.ADMIN.value])
+    # @check_token(role=[Role.HR.value, Role.ADMIN.value])
     def post(self, **kwargs):
+        logger.info(request.headers)
         try:
             logger.info(kwargs)
             resource = JobSeekersService.filter_table(**kwargs)

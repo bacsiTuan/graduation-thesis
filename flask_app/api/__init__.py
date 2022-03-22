@@ -13,7 +13,7 @@ from flask_app.api.survey import ns as survey_ns
 from flask_app.api.position import ns as position_ns
 from flask_app.api.skill import ns as skill_ns
 
-bp = Blueprint("api", __name__, url_prefix="/v1")
+bp = Blueprint("api", __name__, url_prefix="/references/api/1.0")
 
 api = Api()
 api.init_app(bp, version="1.0", title="Flask API", description="Flask API", ui=False, doc=False, add_specs=False)
