@@ -123,7 +123,7 @@ def check_token(role: list):
             logger.info(role)
             # logger.info(request.headers)
             if request.headers.get("Authorization") is None:
-                raise Unauthorized(message="Không có quyền đăng nhập")
+                raise Unauthorized(message="Bạn chưa đăng nhập")
             else:
                 jwt_token = request.headers.get("Authorization")
                 logger.info(jwt_token)
