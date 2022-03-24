@@ -74,8 +74,11 @@ class APIReferrerFilterTable(frp.Resource):
     )
     @check_token(role=[Role.HR.value, Role.ADMIN.value])
     def post(self, **kwargs):
-        resource = ReferrerService.filter_table(**kwargs)
-        return resource
+        try:
+            resource = ReferrerService.filter_table(**kwargs)
+            return resource
+        except Exception as e:
+            logger.info(e)
 
 
 @ns.route("/filter-table-less")

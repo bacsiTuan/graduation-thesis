@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from loguru import logger
-
+import requests
 from app.decorators import sqlalchemy_session
 from app import models as m
 from app.repositories.users import user_repo
 from app.helper import LoginHelper, JWTHelper
 from app.errors.exceptions import BadRequest
+from app.constants.globals import *
+
+URL = f"{BACKEND_HOST}/users"
 
 
 class UsersService(object):
@@ -57,3 +60,22 @@ class UsersService(object):
                 setattr(user, key, params_request.get(key))
         user.save()
         return True
+
+    @classmethod
+    def filter_table(cls, **kwargs):
+        url = f"{URL}/filter-table"
+        data = kwargs
+        response = requests.post(url, json=data, params=data)
+        return response.json()
+
+    @classmethod
+    def get_by_id(cls, user_id):
+        url = f"{URL}/{user_id}"
+        response = requests.get(url)
+        return response.json()
+
+    @classmethod
+    def delete_by_id(cls, user_id):
+        url = f"{URL}/{user_id}"
+        response = requests.delete(url)
+        return response.json()

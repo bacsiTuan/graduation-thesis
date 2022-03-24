@@ -16,7 +16,7 @@ class Users(db.BaseModel, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = "users"
     __table_args__ = {'extend_existing': True}
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String, primary_key=True)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     created_by = db.Column(db.String, index=False, unique=False, nullable=True)
     email = db.Column(db.String, index=False, unique=False, nullable=True)

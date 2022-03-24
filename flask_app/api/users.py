@@ -12,7 +12,7 @@ ns = Namespace(name="users", description="users")
 
 
 @ns.route("")
-class APITasks(frp.Resource):
+class APIUser(frp.Resource):
     @parse_params(
         Argument("roles", location=['values', 'json'], required=True, help="roles", type=str, default=None),
         Argument("email", location=['values', 'json'], required=True, help="email", type=str, default=None),
@@ -64,7 +64,7 @@ class APITasks(frp.Resource):
 
 
 @ns.route("/login")
-class APITasks(frp.Resource):
+class APILogin(frp.Resource):
     @parse_params(
         Argument("user_name", location=['values', 'json'], required=True, help="user name", type=str, default=None),
         Argument("password", location=['values', 'json'], required=True, help="password", type=str, default=None),
@@ -87,3 +87,33 @@ class APITasks(frp.Resource):
                            "login": False,
                        }
                    }, 200
+
+
+@ns.route("/filter-table")
+class APIFilterTable(frp.Resource):
+    @parse_params(
+        Argument("username", location=['values', 'json'], required=False, help="user name", type=str,
+                 default=None),
+        Argument("email", location=['values', 'json'], required=False, help="email", type=str, default=None),
+        Argument("pageNumber", location=["args"], required=False, help="pageNumber", type=int, default=0),
+        Argument("pageSize", location=["args"], required=False, help="pageSize", type=int, default=20),
+        Argument("sortType", location=["args"], required=False, help="sortType", type=str, default="ASC"),
+        Argument("sortBy", location=["args"], required=False, help="sortBy", type=str, default="code"),
+    )
+    @check_token(role=[Role.HR.value, Role.ADMIN.value])
+    def post(self, **kwargs):
+        resource = UsersService.filter_table(**kwargs)
+        return resource
+
+
+@ns.route("/<string:user_id>")
+class APIUserById(frp.Resource):
+    @check_token(role=[Role.HR.value, Role.ADMIN.value])
+    def get(self, user_id):
+        resource = UsersService.get_by_id(user_id)
+        return resource
+
+    @check_token(role=[Role.HR.value, Role.ADMIN.value])
+    def delete(self, user_id):
+        resource = UsersService.delete_by_id(user_id)
+        return resource
