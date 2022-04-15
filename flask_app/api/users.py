@@ -1,6 +1,5 @@
 # coding: utf8
-from flask_restplus import Namespace
-import flask_restplus as frp
+from flask_restful import Resource
 from loguru import logger
 from app.decorators import parse_params, check_token
 from flask_restful.reqparse import Argument
@@ -8,11 +7,11 @@ from app.api.users import UsersService
 from flask import request
 from app.constants import Role
 
-ns = Namespace(name="users", description="users")
+# ns = Namespace(name="users", description="users")
 
 
-@ns.route("")
-class APIUser(frp.Resource):
+# @ns.route("")
+class APIUser(Resource):
     @parse_params(
         Argument("roles", location=['values', 'json'], required=True, help="roles", type=str, default=None),
         Argument("email", location=['values', 'json'], required=True, help="email", type=str, default=None),
@@ -63,8 +62,8 @@ class APIUser(frp.Resource):
             logger.error(e)
 
 
-@ns.route("/login")
-class APILogin(frp.Resource):
+# @ns.route("/login")
+class APILogin(Resource):
     @parse_params(
         Argument("user_name", location=['values', 'json'], required=True, help="user name", type=str, default=None),
         Argument("password", location=['values', 'json'], required=True, help="password", type=str, default=None),
@@ -89,8 +88,8 @@ class APILogin(frp.Resource):
                    }, 200
 
 
-@ns.route("/filter-table")
-class APIFilterTable(frp.Resource):
+# @ns.route("/filter-table")
+class APIFilterTable(Resource):
     @parse_params(
         Argument("username", location=['values', 'json'], required=False, help="user name", type=str,
                  default=None),
@@ -106,8 +105,8 @@ class APIFilterTable(frp.Resource):
         return resource
 
 
-@ns.route("/<string:user_id>")
-class APIUserById(frp.Resource):
+# @ns.route("/<string:user_id>")
+class APIUserById(Resource):
     @check_token(role=[Role.HR.value, Role.ADMIN.value])
     def get(self, user_id):
         resource = UsersService.get_by_id(user_id)

@@ -1,17 +1,16 @@
 # coding: utf8
-from flask_restplus import Namespace
-import flask_restplus as frp
+from flask_restful import Resource
 from loguru import logger
 from app.decorators import parse_params, check_token
 from flask_restful.reqparse import Argument
 from app.api.referrer import ReferrerService
 from app.constants import Role
 
-ns = Namespace(name="referrer", description="referrer")
+# ns = Namespace(name="referrer", description="referrer")
 
 
-@ns.route("")
-class APIReferrer(frp.Resource):
+# @ns.route("")
+class APIReferrer(Resource):
     # CreateReferrerDTO
     @parse_params(
         Argument("name", location=['values', 'json'], required=False, help="name", type=str, default=None),
@@ -39,8 +38,8 @@ class APIReferrer(frp.Resource):
         return resource
 
 
-@ns.route("/<string:referrer_id>")
-class APIReferrerById(frp.Resource):
+# @ns.route("/<string:referrer_id>")
+class APIReferrerById(Resource):
     @check_token(role=[Role.HR.value, Role.ADMIN.value])
     def get(self, referrer_id):
         resource = ReferrerService.get_by_id(referrer_id)
@@ -55,8 +54,8 @@ class APIReferrerById(frp.Resource):
         return resource
 
 
-@ns.route("/filter-table")
-class APIReferrerFilterTable(frp.Resource):
+# @ns.route("/filter-table")
+class APIReferrerFilterTable(Resource):
     @parse_params(
         Argument("to_created_at", location=['values', 'json'], required=False, help="to created at", type=str,
                  default=None),
@@ -81,8 +80,8 @@ class APIReferrerFilterTable(frp.Resource):
             logger.info(e)
 
 
-@ns.route("/filter-table-less")
-class APIReferrerFilterTableLess(frp.Resource):
+# @ns.route("/filter-table-less")
+class APIReferrerFilterTableLess(Resource):
     # FilterReferrerLessDTO
     @parse_params(
         Argument("created_by", location=['values', 'json'], required=False, help="created by", type=str,
@@ -104,8 +103,8 @@ class APIReferrerFilterTableLess(frp.Resource):
         return resource
 
 
-@ns.route("/<string:referrer_code>/active-referrer/<string:confirm_number>")
-class APIReferrerActivateReferrer(frp.Resource):
+# @ns.route("/<string:referrer_code>/active-referrer/<string:confirm_number>")
+class APIReferrerActivateReferrer(Resource):
     def get(self, referrer_code, confirm_number):
         resource = ReferrerService.activate_referrer(referrer_code, confirm_number)
         # return {
@@ -114,8 +113,8 @@ class APIReferrerActivateReferrer(frp.Resource):
         return resource
 
 
-@ns.route("/export-excel")
-class APIReferrerExportExcel(frp.Resource):
+# @ns.route("/export-excel")
+class APIReferrerExportExcel(Resource):
     @parse_params(
         Argument("to_created_at", location=['values', 'json'], required=False, help="to created at", type=str,
                  default=None),

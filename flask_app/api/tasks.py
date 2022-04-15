@@ -1,15 +1,14 @@
 # coding: utf8
-from flask_restplus import Namespace
-import flask_restplus as frp
+from flask_restful import Resource
 from loguru import logger
 from app.decorators import parse_params
 from flask_restful.reqparse import Argument
 from app.api.tasks import TasksService
-ns = Namespace(name="tasks", description="tasks ")
+# ns = Namespace(name="tasks", description="tasks ")
 
 
-@ns.route("")
-class APITasks(frp.Resource):
+# @ns.route("")
+class APITasks(Resource):
     @parse_params(
         Argument("task", location=['values', 'json'], required=True, help="task name", type=str, default=None),
     )

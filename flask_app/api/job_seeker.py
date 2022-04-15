@@ -1,6 +1,5 @@
 # coding: utf8
-from flask_restplus import Namespace
-import flask_restplus as frp
+from flask_restful import Resource
 from loguru import logger
 from app.decorators import parse_params, check_token
 from flask_restful.reqparse import Argument
@@ -8,11 +7,12 @@ from app.api.job_seekers import JobSeekersService
 from app.constants import Role
 from flask import request
 
-ns = Namespace(name="job-seeker", description="job seeker")
 
-
-@ns.route("")
-class APIJobSeekers(frp.Resource):
+# ns = Namespace(name="job-seeker", description="job seeker")
+#
+#
+# @ns.route("")
+class APIJobSeekers(Resource):
     @parse_params(
         Argument("name", location=['values', 'json'], required=False, help="name", type=str, default=None),
         Argument("address", location=['values', 'json'], required=False, help="address", type=str, default=None),
@@ -57,8 +57,8 @@ class APIJobSeekers(frp.Resource):
         return resource
 
 
-@ns.route("/filter-table")
-class APIJobSeekersFilter(frp.Resource):
+# @ns.route("/filter-table")
+class APIJobSeekersFilter(Resource):
     @parse_params(
         Argument("code", location=['values', 'json'], required=False, help="code", type=str, default=None),
         Argument("name", location=['values', 'json'], required=False, help="name", type=str, default=None),
@@ -82,8 +82,8 @@ class APIJobSeekersFilter(frp.Resource):
             logger.error(e)
 
 
-@ns.route("/<string:job_seeker_id>")
-class APIJobSeekersByID(frp.Resource):
+# @ns.route("/<string:job_seeker_id>")
+class APIJobSeekersByID(Resource):
     @check_token(role=[Role.HR.value])
     def delete(self, job_seeker_id):
         resource = JobSeekersService.delete(job_seeker_id)
@@ -96,8 +96,8 @@ class APIJobSeekersByID(frp.Resource):
         return resource
 
 
-@ns.route("/experiences")
-class APIJobSeekersExperience(frp.Resource):
+# @ns.route("/experiences")
+class APIJobSeekersExperience(Resource):
     # CreateExperiencesForJSDTO
     @parse_params(
         Argument("job_seeker_id", location=['values', 'json'], required=False, help="job seeker id", type=str,
@@ -114,8 +114,8 @@ class APIJobSeekersExperience(frp.Resource):
         return resource
 
 
-@ns.route("/awards")
-class APIJobSeekersAwards(frp.Resource):
+# @ns.route("/awards")
+class APIJobSeekersAwards(Resource):
     # CreateAwardsForJSDTO
     @parse_params(
         Argument("job_seeker_id", location=['values', 'json'], required=False, help="job_seeker_id", type=str,
@@ -130,8 +130,8 @@ class APIJobSeekersAwards(frp.Resource):
         return resource
 
 
-@ns.route("/filter-table-less")
-class APIJobSeekersFilterTableLess(frp.Resource):
+# @ns.route("/filter-table-less")
+class APIJobSeekersFilterTableLess(Resource):
     @parse_params(
         Argument("code", location=['values', 'json'], required=False, help="code", type=str,
                  default=None),
@@ -152,8 +152,8 @@ class APIJobSeekersFilterTableLess(frp.Resource):
         return resource
 
 
-@ns.route("/referrer-settings")
-class APIJobSeekersReferrerSettings(frp.Resource):
+# @ns.route("/referrer-settings")
+class APIJobSeekersReferrerSettings(Resource):
     @parse_params(
         Argument("job_seeker_id", location=['values', 'json'], required=False, help="job seeker id", type=str,
                  default=None),
@@ -166,8 +166,8 @@ class APIJobSeekersReferrerSettings(frp.Resource):
         return resource
 
 
-@ns.route("/evaluate")
-class APIJobSeekersEvaluate(frp.Resource):
+# @ns.route("/evaluate")
+class APIJobSeekersEvaluate(Resource):
     # CreateAwardsForJSDTO
     @parse_params(
         Argument("id", location=['values', 'json'], required=False, help="id", type=str,
@@ -182,8 +182,8 @@ class APIJobSeekersEvaluate(frp.Resource):
         return resource
 
 
-@ns.route("/<string:job_seeker_code>/activate-job-seeker/<int:confirm_number>")
-class APIActivateJobSeeker(frp.Resource):
+# @ns.route("/<string:job_seeker_code>/activate-job-seeker/<int:confirm_number>")
+class APIActivateJobSeeker(Resource):
     def get(self, job_seeker_code, confirm_number):
         logger.info(job_seeker_code)
         logger.info(confirm_number)
@@ -194,8 +194,8 @@ class APIActivateJobSeeker(frp.Resource):
         return resource
 
 
-@ns.route("/export-excel")
-class APIExportExcel(frp.Resource):
+# @ns.route("/export-excel")
+class APIExportExcel(Resource):
     @parse_params(
         Argument("code", location=['values', 'json'], required=False, help="code", type=str, default=None),
         Argument("name", location=['values', 'json'], required=False, help="name", type=str, default=None),

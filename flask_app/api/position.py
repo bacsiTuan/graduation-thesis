@@ -1,17 +1,16 @@
 # coding: utf8
-from flask_restplus import Namespace
-import flask_restplus as frp
-from loguru import logger
+from flask_restful import Resource
 from app.decorators import parse_params, check_token
 from flask_restful.reqparse import Argument
 from app.api.position import PositionService
 from app.constants import Role
 
-ns = Namespace(name="position", description="position")
+
+# ns = Namespace(name="position", description="position")
 
 
-@ns.route("")
-class APIPosition(frp.Resource):
+# @ns.route("")
+class APIPosition(Resource):
     @parse_params(
         Argument("name", location=['values', 'json'], required=True, help="name", type=str, default=None),
     )
@@ -30,15 +29,15 @@ class APIPosition(frp.Resource):
         return resource
 
 
-@ns.route("/<string:position_id>")
-class APIPositionById(frp.Resource):
+# @ns.route("/<string:position_id>")
+class APIPositionById(Resource):
     def get(self, position_id):
         resource = PositionService.get_by_id(position_id)
         return resource
 
 
-@ns.route("/filter-table")
-class APIPositionFilterTable(frp.Resource):
+# @ns.route("/filter-table")
+class APIPositionFilterTable(Resource):
     @parse_params(
         Argument("created_by", location=['values', 'json'], required=False, help="created by", type=str, default=None),
         Argument("updated_by", location=['values', 'json'], required=False, help="updated by", type=str,

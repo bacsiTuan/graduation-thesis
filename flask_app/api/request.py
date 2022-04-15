@@ -1,17 +1,16 @@
 # coding: utf8
-from flask_restplus import Namespace
-import flask_restplus as frp
+from flask_restful import Resource
 from loguru import logger
 from app.decorators import parse_params, check_token
 from flask_restful.reqparse import Argument
 from app.api.request import RequestService
 from app.constants import Role
 
-ns = Namespace(name="request", description="request")
+# ns = Namespace(name="request", description="request")
 
 
-@ns.route("")
-class APIRequest(frp.Resource):
+# @ns.route("")
+class APIRequest(Resource):
     @parse_params(
         Argument("title", location=['values', 'json'], required=False, help="title", type=str, default=None),
         Argument("type", location=['values', 'json'], required=False, help="type", type=str, default=None),
@@ -36,8 +35,8 @@ class APIRequest(frp.Resource):
         return resource
 
 
-@ns.route("/<string:request_id>")
-class APIRequestById(frp.Resource):
+# @ns.route("/<string:request_id>")
+class APIRequestById(Resource):
     @check_token(role=[Role.HR.value, Role.ADMIN.value])
     def get(self, request_id):
         resource = RequestService.get_by_id(request_id)
@@ -49,8 +48,8 @@ class APIRequestById(frp.Resource):
         return resource
 
 
-@ns.route("/<string:request_id>/unassign")
-class APIRequestUnassigned(frp.Resource):
+# @ns.route("/<string:request_id>/unassign")
+class APIRequestUnassigned(Resource):
     @parse_params(
         Argument("type", location=["args"], required=False, help="type", type=str, default=None),
     )
@@ -61,8 +60,8 @@ class APIRequestUnassigned(frp.Resource):
         return resource
 
 
-@ns.route("/job-seeker/<string:job_seeker_id>")
-class APIRequestByJobSeeker(frp.Resource):
+# @ns.route("/job-seeker/<string:job_seeker_id>")
+class APIRequestByJobSeeker(Resource):
     @parse_params(
         Argument("type", location=["args"], required=False, help="type", type=str, default=None),
     )
@@ -73,8 +72,8 @@ class APIRequestByJobSeeker(frp.Resource):
         return resource
 
 
-@ns.route("/referrer/<string:referrer_id>")
-class APIRequestFindByReferrerId(frp.Resource):
+# @ns.route("/referrer/<string:referrer_id>")
+class APIRequestFindByReferrerId(Resource):
     # findByReferrerId
     @check_token(role=[Role.HR.value, Role.ADMIN.value])
     def get(self, referrer_id):
@@ -82,8 +81,8 @@ class APIRequestFindByReferrerId(frp.Resource):
         return resource
 
 
-@ns.route("/draft")
-class APIRequestDraft(frp.Resource):
+# @ns.route("/draft")
+class APIRequestDraft(Resource):
     @parse_params(
         Argument("type", location=["args"], required=False, help="type", type=str, default=None),
         Argument("pageNumber", location=["args"], required=False, help="pageNumber", type=int, default=0),
@@ -97,8 +96,8 @@ class APIRequestDraft(frp.Resource):
         return resource
 
 
-@ns.route("/assign-referrer")
-class APIRequestAssignReferrer(frp.Resource):
+# @ns.route("/assign-referrer")
+class APIRequestAssignReferrer(Resource):
     # AssignReferrerDTO
     @parse_params(
         Argument("request_id", location=['values', 'json'], required=False, help="request_id", type=str, default=None),
@@ -115,8 +114,8 @@ class APIRequestAssignReferrer(frp.Resource):
         return resource
 
 
-@ns.route("/assign-job-seeker")
-class APIRequestAssignJobSeeker(frp.Resource):
+# @ns.route("/assign-job-seeker")
+class APIRequestAssignJobSeeker(Resource):
     # AssignJobSeekerDTO
     @parse_params(
         Argument("request_id", location=['values', 'json'], required=False, help="request_id", type=str, default=None),
@@ -129,8 +128,8 @@ class APIRequestAssignJobSeeker(frp.Resource):
         return resource
 
 
-@ns.route("/data-select")
-class APIRequestDataSelect(frp.Resource):
+# @ns.route("/data-select")
+class APIRequestDataSelect(Resource):
     @parse_params(
         Argument("codeOrName", location=["args"], required=False, help="codeOrName", type=str, default="code"),
     )
@@ -140,8 +139,8 @@ class APIRequestDataSelect(frp.Resource):
         return resource
 
 
-@ns.route("/filter-table")
-class APIRequestFilterTable(frp.Resource):
+# @ns.route("/filter-table")
+class APIRequestFilterTable(Resource):
     @parse_params(
         Argument("title", location=['values', 'json'], required=False, help="title", type=str, default=None),
         Argument("to_due_date", location=['values', 'json'], required=False, help="to_due_date", type=str,
@@ -161,8 +160,8 @@ class APIRequestFilterTable(frp.Resource):
         return resource
 
 
-@ns.route("/filter-details")
-class APIRequestFilterDetails(frp.Resource):
+# @ns.route("/filter-details")
+class APIRequestFilterDetails(Resource):
     @parse_params(
         Argument("title", location=['values', 'json'], required=False, help="title", type=str, default=None),
         Argument("to_due_date", location=['values', 'json'], required=False, help="to_due_date", type=str,
@@ -187,16 +186,16 @@ class APIRequestFilterDetails(frp.Resource):
         return resource
 
 
-@ns.route("/<string:request_id>/complete")
-class APIRequestComplete(frp.Resource):
+# @ns.route("/<string:request_id>/complete")
+class APIRequestComplete(Resource):
     @check_token(role=[Role.HR.value, Role.ADMIN.value])
     def put(self, request_id):
         resource = RequestService.complete(request_id)
         return resource
 
 
-@ns.route("/export-excel")
-class APIRequestExportExcel(frp.Resource):
+# @ns.route("/export-excel")
+class APIRequestExportExcel(Resource):
     @parse_params(
         Argument("title", location=['values', 'json'], required=False, help="title", type=str, default=None),
         Argument("to_due_date", location=['values', 'json'], required=False, help="to_due_date", type=str,
