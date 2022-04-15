@@ -71,7 +71,7 @@ class APIJobSeekersFilter(frp.Resource):
         Argument("sortType", location=["args"], required=False, help="sortType", type=str, default="ASC"),
         Argument("sortBy", location=["args"], required=False, help="sortBy", type=str, default="code"),
     )
-    @check_token(role=[Role.HR.value, Role.ADMIN.value])
+    # @check_token(role=[Role.HR.value, Role.ADMIN.value])
     def post(self, **kwargs):
         # logger.info(request.headers)
         try:
