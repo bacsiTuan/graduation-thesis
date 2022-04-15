@@ -2,8 +2,8 @@
 import os
 import urllib.parse
 
-import mongoengine
-from flask_redis import FlaskRedis
+# import mongoengine
+# from flask_redis import FlaskRedis
 from tuan_lib.database import ActiveAlchemy  # noqa
 from tuan_lib.http import FlaskRequestId  # noqa
 
@@ -43,4 +43,4 @@ DB_NAME = os.environ['DB_MYSQL_DBNAME']
 DATABASE_URL = f'{DB_TYPE}+{DB_CONNECTOR}://{urllib.parse.quote(DB_USERNAME)}:{urllib.parse.quote(DB_PASSWORD)}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 
 db = ActiveAlchemy(DATABASE_URL)
-flask_request_id = FlaskRequestId()
+# flask_request_id = FlaskRequestId()
