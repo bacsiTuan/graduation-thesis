@@ -15,13 +15,17 @@ MONGODB_DB = os.environ.get("DB_MONGO_DATABASE") or "<your mongodb database>"
 MONGODB_USERNAME = os.environ.get('DB_MONGO_USERNAME') or None
 MONGODB_PASSWORD = os.environ.get('DB_MONGO_PASSWORD') or None
 MONGODB_REPLICASET = os.environ.get('DB_MONGODB_REPLICASET') or None  # 'rs0'
-MONGODB_READ_PREFERENCE = os.environ.get('MONGODB_READ_PREFERENCE') or 'secondaryPreferred'
-MONGODB_RETRY_WRITES = 'false'
+MONGODB_READ_PREFERENCE = os.environ.get('MONGODB_READ_PREFERENCE') or None
+MONGODB_RETRY_WRITES = os.environ.get("DB_MONGO_RETRY_WRITES") or 'false'
+IS_MONGO_SRV = os.environ.get("DB_MONGO_SRV") or "NO"
 
 MONGODB_URL = f'mongodb://'
-# MONGODB_URL = f'mongodb+srv://'
-if MONGODB_USERNAME is not None and MONGODB_PASSWORD is not None:
+if IS_MONGO_SRV == "YES":
+    MONGODB_URL = f'mongodb+srv://'
+if MONGODB_USERNAME is not None and MONGODB_PASSWORD is not None and IS_MONGO_SRV == "NO":
     MONGODB_URL = f'{MONGODB_URL}{urllib.parse.quote(MONGODB_USERNAME)}:{urllib.parse.quote(MONGODB_PASSWORD)}@{MONGODB_HOST}:{MONGODB_PORT}/'
+elif MONGODB_USERNAME is not None and MONGODB_PASSWORD is not None and IS_MONGO_SRV == "YES":
+    MONGODB_URL = f'{MONGODB_URL}{urllib.parse.quote(MONGODB_USERNAME)}:{urllib.parse.quote(MONGODB_PASSWORD)}@{MONGODB_HOST}/'
 else:
     MONGODB_URL = f'{MONGODB_URL}{MONGODB_HOST}:{MONGODB_PORT}/'
 
@@ -33,9 +37,8 @@ if MONGODB_READ_PREFERENCE is not None:
 if MONGODB_REPLICASET is not None:
     MONGODB_URL = f'{MONGODB_URL}&replicaSet={MONGODB_REPLICASET}'
 logger.info(MONGODB_URL)
-mongo_string = "mongodb+srv://tuancong:boyhandsome@clustertuan.fk6ag.mongodb.net/develop?retryWrites=true&w=majority"
-# db_mongo = mongoengine.connect(host=MONGODB_URL)
-db_mongo = mongoengine.connect(host=mongo_string) # connect mongo srv
+# mongo_string_srv = "mongodb+srv://tuancong:boyhandsome@clustertuan.fk6ag.mongodb.net/develop?retryWrites=true&w=majority"
+db_mongo = mongoengine.connect(host=MONGODB_URL)
 
 DB_TYPE = os.environ['DB_MYSQL_TYPE'] or 'mysql'
 DB_CONNECTOR = os.environ['DB_MYSQL_CONNECTOR'] or 'pymysql'
