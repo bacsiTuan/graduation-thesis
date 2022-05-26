@@ -69,23 +69,26 @@ class APILogin(Resource):
         Argument("password", location=['values', 'json'], required=True, help="password", type=str, default=None),
     )
     def put(self, **kwargs):
-        logger.warning(kwargs)
-        login = UsersService.login(**kwargs)
-        if login:
-            return {
-                       "success": True,
-                       "data": {
-                           "login": True,
-                           "token": login
-                       }
-                   }, 200
-        else:
-            return {
-                       "success": True,
-                       "data": {
-                           "login": False,
-                       }
-                   }, 200
+        try:
+            logger.warning(kwargs)
+            login = UsersService.login(**kwargs)
+            if login:
+                return {
+                           "success": True,
+                           "data": {
+                               "login": True,
+                               "token": login
+                           }
+                       }, 200
+            else:
+                return {
+                           "success": True,
+                           "data": {
+                               "login": False,
+                           }
+                       }, 200
+        except Exception as e:
+            logger.info(e)
 
 
 # @ns.route("/filter-table")

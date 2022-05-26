@@ -21,6 +21,11 @@ class UsersService(object):
 
     @classmethod
     def login(cls, **kwargs):
+        # booking_log = m.MBookingLog(
+        #     booking_id=10,
+        #     store_id=12,
+        # )
+        # booking_log.save()
         login = LoginHelper.check_password(
             name=kwargs.get('user_name'),
             pwd=kwargs.get('password')
