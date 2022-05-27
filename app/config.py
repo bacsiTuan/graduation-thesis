@@ -5,8 +5,8 @@ from loguru import logger
 
 
 class Config(object):
-    SECRET_KEY = os.environ.get("SECRET_KEY") or "<your secret key>"
-    API_URL = os.environ.get("API_URL") or "<your api url>"
+    # SECRET_KEY = os.environ["SECRET_KEY"] or "<your secret key>"
+    # API_URL = os.environ["API_URL"] or "<your api url>"
     MAXIMUM_USER_API = 3
 
     # MONGODB_HOST = os.environ.get("DB_MONGO_HOST") or "<your mongodb host>"
@@ -39,13 +39,13 @@ class Config(object):
     #                             db=os.environ.get("SQLALCHEMY_DATABASE") or "<your sql database>"
     #                         )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    DB_TYPE = os.environ.get('DB_MYSQL_TYPE')
-    DB_CONNECTOR = os.environ.get('DB_MYSQL_CONNECTOR')
-    DB_USERNAME = os.environ.get('DB_MYSQL_USER')
-    DB_PASSWORD = os.environ.get('DB_MYSQL_PASS')
-    DB_HOST = os.environ.get('DB_MYSQL_HOST')
-    DB_PORT = os.environ.get('DB_MYSQL_PORT')
-    DB_NAME = os.environ.get('DB_MYSQL_DBNAME')
+    DB_TYPE = os.environ['DB_MYSQL_TYPE']
+    DB_CONNECTOR = os.environ['DB_MYSQL_CONNECTOR']
+    DB_USERNAME = os.environ['DB_MYSQL_USER']
+    DB_PASSWORD = os.environ['DB_MYSQL_PASS']
+    DB_HOST = os.environ['DB_MYSQL_HOST']
+    DB_PORT = os.environ['DB_MYSQL_PORT']
+    DB_NAME = os.environ['DB_MYSQL_DBNAME']
     SQLALCHEMY_DATABASE_URI = f'{DB_TYPE}+{DB_CONNECTOR}://{urllib.parse.quote(DB_USERNAME)}:{urllib.parse.quote(DB_PASSWORD)}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 
 

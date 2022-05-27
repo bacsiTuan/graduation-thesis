@@ -1,3 +1,4 @@
 # coding: utf8
-from .tasks import Tasks # noqa
-from .users import Users # noqa
+from .tasks import Tasks  # noqa
+from .users import Users  # noqa
+from .mongodb import MBookingLog

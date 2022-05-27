@@ -4,7 +4,7 @@ from werkzeug.exceptions import default_exceptions
 from loguru import logger
 
 from app.errors.handler import api_error_handler
-from app.extensions import flask_request_id
+# from app.extensions import flask_request_id
 
 from flask import Flask
 from flask_cors import CORS
@@ -23,7 +23,7 @@ def create_app(config_app):
 
 
 def __config_logging(app):
-    logger.info('Start flask...')
+    logger.info('Start flask... 🚀🚀🚀')
 
 
 def __register_blueprint(app):
@@ -33,9 +33,10 @@ def __register_blueprint(app):
 
 def __init_app(app):
     try:
+        pass
         #     # db_mongo.init_app(app)
         #     redis.init_app(app)
-        flask_request_id.init_app(app)
+        # flask_request_id.init_app(app)
     except Exception as e:
         logger.error(e)
 
