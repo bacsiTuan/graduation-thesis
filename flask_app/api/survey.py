@@ -1,17 +1,16 @@
 # coding: utf8
-from flask_restplus import Namespace
-import flask_restplus as frp
+from flask_restful import Resource
 from loguru import logger
 from app.decorators import parse_params, check_token
 from flask_restful.reqparse import Argument
 from app.api.survey import SurveyService
 from app.constants import Role
 
-ns = Namespace(name="survey", description="survey")
+# ns = Namespace(name="survey", description="survey")
 
 
-@ns.route("")
-class APISurvey(frp.Resource):
+# @ns.route("")
+class APISurvey(Resource):
     @parse_params(
         Argument("name", location=['values', 'json'], required=False, help="name", type=str,
                  default=None),
@@ -39,8 +38,8 @@ class APISurvey(frp.Resource):
         return resource
 
 
-@ns.route("/<string:survey_id>")
-class APISurveyById(frp.Resource):
+# @ns.route("/<string:survey_id>")
+class APISurveyById(Resource):
     @check_token(role=[Role.HR.value])
     def get(self, survey_id):
         resource = SurveyService.get_by_id(survey_id)
@@ -52,8 +51,8 @@ class APISurveyById(frp.Resource):
         return resource
 
 
-@ns.route("/filter-table")
-class APISurveyFilterTable(frp.Resource):
+# @ns.route("/filter-table")
+class APISurveyFilterTable(Resource):
     @parse_params(
         Argument("code", location=['values', 'json'], required=False, help="code", type=str,
                  default=None),
@@ -70,8 +69,8 @@ class APISurveyFilterTable(frp.Resource):
         return resource
 
 
-@ns.route("/options")
-class APISurveyOptions(frp.Resource):
+# @ns.route("/options")
+class APISurveyOptions(Resource):
     @parse_params(
         Argument("codeOrName", location=["args"], required=False, help="sortBy", type=str, default="code"),
     )

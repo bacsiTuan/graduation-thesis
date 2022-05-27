@@ -4,7 +4,7 @@ from werkzeug.exceptions import default_exceptions
 from loguru import logger
 
 from app.errors.handler import api_error_handler
-from app.extensions import flask_request_id
+# from app.extensions import flask_request_id
 
 from flask import Flask
 from flask_cors import CORS

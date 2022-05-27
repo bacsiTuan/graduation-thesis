@@ -1,6 +1,5 @@
 # coding: utf8
-from flask_restplus import Namespace
-import flask_restplus as frp
+from flask_restful import Resource
 from loguru import logger
 from app.decorators import parse_params, check_token
 from flask_restful.reqparse import Argument
@@ -8,11 +7,11 @@ from app.api.users import UsersService
 from flask import request
 from app.constants import Role
 
-ns = Namespace(name="users", description="users")
+# ns = Namespace(name="users", description="users")
 
 
-@ns.route("")
-class APIUser(frp.Resource):
+# @ns.route("")
+class APIUser(Resource):
     @parse_params(
         Argument("roles", location=['values', 'json'], required=True, help="roles", type=str, default=None),
         Argument("email", location=['values', 'json'], required=True, help="email", type=str, default=None),
@@ -63,34 +62,37 @@ class APIUser(frp.Resource):
             logger.error(e)
 
 
-@ns.route("/login")
-class APILogin(frp.Resource):
+# @ns.route("/login")
+class APILogin(Resource):
     @parse_params(
         Argument("user_name", location=['values', 'json'], required=True, help="user name", type=str, default=None),
         Argument("password", location=['values', 'json'], required=True, help="password", type=str, default=None),
     )
     def put(self, **kwargs):
-        logger.warning(kwargs)
-        login = UsersService.login(**kwargs)
-        if login:
-            return {
-                       "success": True,
-                       "data": {
-                           "login": True,
-                           "token": login
-                       }
-                   }, 200
-        else:
-            return {
-                       "success": True,
-                       "data": {
-                           "login": False,
-                       }
-                   }, 200
+        try:
+            logger.warning(kwargs)
+            login = UsersService.login(**kwargs)
+            if login:
+                return {
+                           "success": True,
+                           "data": {
+                               "login": True,
+                               "token": login
+                           }
+                       }, 200
+            else:
+                return {
+                           "success": True,
+                           "data": {
+                               "login": False,
+                           }
+                       }, 200
+        except Exception as e:
+            logger.info(e)
 
 
-@ns.route("/filter-table")
-class APIFilterTable(frp.Resource):
+# @ns.route("/filter-table")
+class APIFilterTable(Resource):
     @parse_params(
         Argument("username", location=['values', 'json'], required=False, help="user name", type=str,
                  default=None),
@@ -100,14 +102,14 @@ class APIFilterTable(frp.Resource):
         Argument("sortType", location=["args"], required=False, help="sortType", type=str, default="ASC"),
         Argument("sortBy", location=["args"], required=False, help="sortBy", type=str, default="code"),
     )
-    @check_token(role=[Role.HR.value, Role.ADMIN.value])
+    # @check_token(role=[Role.HR.value, Role.ADMIN.value])
     def post(self, **kwargs):
         resource = UsersService.filter_table(**kwargs)
         return resource
 
 
-@ns.route("/<string:user_id>")
-class APIUserById(frp.Resource):
+# @ns.route("/<string:user_id>")
+class APIUserById(Resource):
     @check_token(role=[Role.HR.value, Role.ADMIN.value])
     def get(self, user_id):
         resource = UsersService.get_by_id(user_id)

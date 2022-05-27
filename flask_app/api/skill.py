@@ -1,17 +1,17 @@
 # coding: utf8
-from flask_restplus import Namespace
-import flask_restplus as frp
+from flask_restful import Resource
 from loguru import logger
 from app.decorators import parse_params, check_token
 from flask_restful.reqparse import Argument
 from app.api.skill import SkillService
 from app.constants import Role
 
-ns = Namespace(name="skill", description="skill")
+
+# ns = Namespace(name="skill", description="skill")
 
 
-@ns.route("")
-class APISkill(frp.Resource):
+# @ns.route("")
+class APISkill(Resource):
     @parse_params(
         Argument("name", location=['values', 'json'], required=True, help="name", type=str, default=None),
     )
@@ -30,15 +30,15 @@ class APISkill(frp.Resource):
         return resource
 
 
-@ns.route("/<string:skill_id>")
-class APISkillById(frp.Resource):
+# @ns.route("/<string:skill_id>")
+class APISkillById(Resource):
     def get(self, skill_id):
         resource = SkillService.get_by_id(skill_id)
         return resource
 
 
-@ns.route("/filter-table")
-class APISkillFilterTable(frp.Resource):
+# @ns.route("/filter-table")
+class APISkillFilterTable(Resource):
     @parse_params(
         Argument("created_by", location=['values', 'json'], required=False, help="created by", type=str, default=None),
         Argument("updated_by", location=['values', 'json'], required=False, help="updated by", type=str,
