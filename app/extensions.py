@@ -39,7 +39,9 @@ if MONGODB_READ_PREFERENCE is not None:
 if MONGODB_REPLICASET is not None:
     MONGODB_URL = f'{MONGODB_URL}&replicaSet={MONGODB_REPLICASET}'
 
-# db_mongo = mongoengine.connect(host=MONGODB_URL)
+# mongo_string_srv = "mongodb+srv://{user}:{pass}@clustertuan.fk6ag.mongodb.net/develop?retryWrites=true&w=majority"
+
+db_mongo = mongoengine.connect(host=MONGODB_URL)
 
 DB_TYPE = os.environ['DB_MYSQL_TYPE'] or 'mysql'
 DB_CONNECTOR = os.environ['DB_MYSQL_CONNECTOR'] or 'pymysql'

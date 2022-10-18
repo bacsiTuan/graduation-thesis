@@ -26,6 +26,7 @@ class UsersService(object):
         #     store_id=12,
         # )
         # booking_log.save()
+        # return True
         login = LoginHelper.check_password(
             name=kwargs.get('user_name'),
             pwd=kwargs.get('password')
