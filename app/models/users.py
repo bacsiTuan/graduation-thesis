@@ -41,3 +41,6 @@ class Users(db.BaseModel, BaseModel, metaclass=MetaBaseModel):
         self.updated_by = kwargs.get("updated_by") or None
         self.username = kwargs.get("username") or None
         self.job_seeker_id = kwargs.get("job_seeker_id") or None
+
+
+db.create_all()

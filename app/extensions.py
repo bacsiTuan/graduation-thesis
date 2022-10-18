@@ -1,7 +1,9 @@
 # coding: utf8
 import os
 import urllib.parse
+from dotenv import load_dotenv
 
+load_dotenv(override=False)
 import mongoengine
 from flask_redis import FlaskRedis
 from tuan_lib.database import ActiveAlchemy  # noqa
