@@ -3,7 +3,6 @@
 Define the Tasks Model
 """
 
-
 from app.extensions import db
 from app.models.abc import BaseModel, MetaBaseModel
 
