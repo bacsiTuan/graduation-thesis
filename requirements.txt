@@ -23,7 +23,7 @@ pymongo==3.11.3
 mongoengine == 0.23.1
 
 # security libs
-PyJWT==1.4.2
+PyJWT==2.4.0
 bcrypt==3.2.0
 
 # UrBox libs
