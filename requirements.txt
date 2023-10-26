@@ -4,7 +4,7 @@ Flask==2.3.2
 flask-restful==0.3.9
 flask-cors==3.0.10
 gunicorn==20.1.0
-Werkzeug==2.2.3
+Werkzeug==3.0.1
 
 # Common libs
 loguru~=0.5.3
